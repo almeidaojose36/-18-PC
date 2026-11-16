@@ -29,7 +29,9 @@ npm run render -- --out out/video.mp4
 
 Renders every frame in headless Chromium (1920×1080, 30 fps by default; `--fps`,
 `--width`, `--height`, `--workers` to change) and mixes in the narration. Needs
-`playwright` and `ffmpeg`. Finished 30-second chunks are kept in `out/.render`, so an
+`ffmpeg` on your PATH and a one-time `npx playwright install chromium`. If it runs
+slower than a few frames per second, add `--headed`; on a machine with no GPU, add
+`--software`. Finished 30-second chunks are kept in `out/.render`, so an
 interrupted render resumes when you run the command again.
 
 ## What is where

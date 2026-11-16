@@ -2,6 +2,7 @@
 //
 //   npm run dev            (in another terminal; or pass --url)
 //   npm run render -- --out out/video.mp4 [--fps 30] [--width 1920] [--height 1080] [--workers 4]
+//                     [--headed] [--software]
 //
 // The timeline is split across workers; each pipes JPEG frames into its own ffmpeg, the
 // chunks are joined without re-encoding, and the narration clips are mixed in at their
@@ -25,7 +26,16 @@ const tmp = path.resolve(arg('tmp', path.join(path.dirname(out), '.render')));
 const WARMUP = 45; // frames rendered (not saved) before a chunk so fades are mid-flight correctly
 
 async function open() {
-  const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+  // Default: let Chromium use the machine's GPU. --software forces CPU rendering (slow, for
+  // machines without a GPU); --headed opens visible windows, which is the most reliable way
+  // to get GPU acceleration if the default turns out slow.
+  const software = process.argv.includes('--software'), headed = process.argv.includes('--headed');
+  const browser = await chromium.launch({
+    headless: !headed,
+    args: software
+      ? ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist']
+      : ['--ignore-gpu-blocklist', '--enable-gpu', '--enable-webgl', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'],
+  });
   const page = await browser.newPage({ viewport: { width, height } });
   page.on('pageerror', (e) => { console.error('page error:', e); process.exit(1); });
   await page.goto(`${url}?capture=1&mute=1`);
@@ -72,7 +82,7 @@ if (arg('chunk')) {
   await Promise.all(Array.from({ length: workers }, async () => { while (queue.length) await runOne(queue.shift()); }));
   console.log(`frames done in ${((Date.now() - t0) / 60000).toFixed(1)} min; mixing audio`);
   const list = path.join(tmp, 'list.txt');
-  fs.writeFileSync(list, chunks.filter(Boolean).map((c) => `file '${c}'`).join('\n'));
+  fs.writeFileSync(list, chunks.filter(Boolean).map((c) => `file '${c.replace(/\\/g, '/')}'`).join('\n'));
   const used = clips.filter(([id, start]) => start < total / fps && fs.existsSync(path.join(root, 'public/audio', `${id}.mp3`)));
   const inputs = used.flatMap(([id]) => ['-i', path.join(root, 'public/audio', `${id}.mp3`)]);
   const filter = used.map(([, start], i) => `[${i + 1}:a]adelay=${Math.round(start * 1000)}:all=1[a${i}]`).join(';')
