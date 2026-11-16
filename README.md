@@ -57,7 +57,7 @@ Narration uses the ElevenLabs API (`ELEVENLABS_API_KEY`, optional `ELEVENLABS_VO
 
 ## Model accuracy
 
-The exterior follows photos of the real unit: the diamond lattice over the top and
+The exterior follows Dell's product images and teardown photos of the real unit: the diamond lattice over the top and
 sides, the smooth front band with the power button on top, the round Dell logo and
 port order on the front (headset, USB 2.0, USB 3.0), and the rear layout (DC in, two
 DisplayPorts, stacked USB 2.0, Ethernet). Overall size, PCB, SoC package and die, RAM,

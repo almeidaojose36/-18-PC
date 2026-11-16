@@ -81,7 +81,7 @@ function poly(points, r = 0, PathClass = THREE.Shape) {
 }
 
 // Diamond lattice of raised ridges filling the rectangle [u0,u1] x [v0,v1] of the XZ plane
-// (u = x, v = z). Each ridge is a square bar turned 45 degrees, so half of it stands proud.
+// (u = x, v = z). Each ridge is a thin blade standing `side` proud of the surface.
 function lattice(u0, u1, v0, v1, pitch, side) {
   const geos = [];
   for (const sign of [1, -1]) {
@@ -91,8 +91,8 @@ function lattice(u0, u1, v0, v1, pitch, side) {
       const ub = sign > 0 ? Math.min(u1, v1 - c) : Math.min(u1, c - v0);
       if (ub - ua < 1.2) continue;
       const um = (ua + ub) / 2;
-      const g = new THREE.BoxGeometry((ub - ua) * Math.SQRT2, side, side);
-      g.rotateX(Math.PI / 4); g.rotateY(sign > 0 ? -Math.PI / 4 : Math.PI / 4); g.translate(um, 0, sign * um + c);
+      const g = new THREE.BoxGeometry((ub - ua) * Math.SQRT2, side * 2, 1.0);   // thin ridge, half buried
+      g.rotateY(sign > 0 ? -Math.PI / 4 : Math.PI / 4); g.translate(um, 0, sign * um + c);
       geos.push(g);
     }
   }
@@ -166,7 +166,7 @@ export function buildWyse3040({ decor = true, badgeTexture = null, nameTexture =
   ring.holes.push(poly([[-XW, FRONT_Z - DIM.WALL], [XW, FRONT_Z - DIM.WALL], [XW, REAR_Z + DIM.WALL], [-XW, REAR_Z + DIM.WALL]], 1, THREE.Path));
   shell.add(slab(ring, HH * 2 - DIM.REC - 2 - DIM.COVER, base + 2, M.plastic));       // walls
   // diamond lattice: lid, then both side walls
-  const PITCH = 7.6, BAR = DIM.REC * Math.SQRT2;
+  const PITCH = 7.6, BAR = DIM.REC;
   const top = lattice(-XI + 0.5, XI - 0.5, REAR_Z + 0.5, ZB, PITCH, BAR);
   top.translate(0, base, 0);
   shell.add(new THREE.Mesh(top, M.plastic));
@@ -175,13 +175,11 @@ export function buildWyse3040({ decor = true, badgeTexture = null, nameTexture =
     g.rotateZ(Math.PI / 2); g.translate(sx * XI, 0, 0);
     shell.add(new THREE.Mesh(g, M.plastic));
   }
-  // Kensington lock slot, 7 x 3 mm, in the smooth band on the X+ side
-  box(shell, 0.1, 3, 7, M.cavity, X + 0.02, 1.5, ZB + 9);
+  // Kensington lock slot with its light surround, in the lattice just behind the front band
+  box(shell, 1.7, 9, 5, M.print, -XI - 0.9, -2.5, ZB - 8);
+  box(shell, 1.8, 6.5, 2.6, M.cavity, -XI - 0.9, -1.25, ZB - 8);
   // PCB standoffs
   for (const [hx, hz] of HOLES) cyl(shell, 3, BOARD_Y - (base + 2), M.plastic, -hx, base + 2, hz);
-  // stickers on the top of the front band (left of the power button when upright)
-  box(shell, 11, 0.08, 12, M.sticker, 38, -HH - 0.07, ZB + 9);
-  box(shell, 8, 0.08, 10, M.sticker, 27, -HH - 0.07, ZB + 9);
 
   // Round Dell logo on the front face (right-hand side when the unit stands upright)
   const badge = part(unit, parts, 'badge');
@@ -332,8 +330,8 @@ export function buildWyse3040({ decor = true, badgeTexture = null, nameTexture =
   usbPort(usbRear, -13.5, -1, M.usbBlack, 0); usbPort(usbRear, -13.5, -1, M.usbBlack, 6.2);
   const rj45 = part(board, parts, 'rj45');
   connector(rj45, M, { x: -36, w: 15.5, h: 12, depth: 16, dir: -1, face: (plane) => {
-    plane(11.8, 8, M.cavity, -36, 7); plane(6, 2.2, M.cavity, -36, 2.2);
-    plane(1.6, 1.2, M.led, -41.8, 1.2, 0.02); plane(1.6, 1.2, M.gold, -30.2, 1.2, 0.02);
+    plane(11.8, 7.6, M.cavity, -36, 5);
+    plane(1.8, 1.2, M.gold, -41.6, 10.6, 0.02); plane(1.8, 1.2, M.led, -30.4, 10.6, 0.02);
   } });
 
   // Power button: on top of the front band, right-hand side when upright (above the board's switch)

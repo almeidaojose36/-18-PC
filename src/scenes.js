@@ -25,7 +25,7 @@ export const SHOTS = {
   o1: { d: 300, az: 35, el: 18, hover: 22, rotY: 40, tr: 'full', callout: ['$18', 'Dell Wyse 3040 · used, 2026'] },
   o2: { flip: 1, ghost: 1, hover: 40, el: 38, az: 20, d: 280, tr: 2.2, hl: ['soc', 'ram', 'emmc'], callout: ['4 cores · 2 GB · 16 GB', 'Atom x5-Z8350 · DDR3L · eMMC flash'] },
   o3: { flip: 0, ghost: 0, hover: 0, rotY: 0, az: -28, el: 14, d: 340, video: 1, stutter: 1, cores: 1, tr: 2.2 },
-  o4: { video: 0, stutter: 0, cores: 0, az: 25, d: 300, callout: ['$400+', 'list price, new, in enterprise catalogs'] },
+  o4: { video: 0, stutter: 0, cores: 0, az: 25, d: 300, callout: ['$428', 'Dell’s price for a new one'] },
   o5: { d: 200, az: 42, el: 10, tr: 'full' },
   o6: { flip: 1, screws: 1, board: 1, cover: 1, sink: 1, hover: 30, el: 46, az: 22, d: 230, die: 1, cores: 0.7, tr: 3.5 },
 
