@@ -227,23 +227,28 @@ export function createStage(canvas) {
   const desk = new THREE.Group();
   const bezel = new THREE.MeshStandardMaterial({ color: 0x15171b, roughness: 0.5, metalness: 0.2 });
   const standMat = new THREE.MeshStandardMaterial({ color: 0x9a9da3, roughness: 0.4, metalness: 0.7 });
-  const screenMat = new THREE.MeshBasicMaterial({ color: 0x16345f, toneMapped: false });
-  const winMat = new THREE.MeshBasicMaterial({ color: 0xdfe6f1, toneMapped: false });
-  const barMat = new THREE.MeshBasicMaterial({ color: 0x3c78d8, toneMapped: false });
+  // screens show the wallpaper (public/wallpaper.webp), centre-cropped to 16:9
+  const wallpaper = new THREE.TextureLoader().load(`${import.meta.env.BASE_URL}wallpaper.webp`, (t) => {
+    const want = 531 / 299, have = t.image.width / t.image.height;
+    if (have > want) { t.repeat.x = want / have; t.offset.x = (1 - t.repeat.x) / 2; } else { t.repeat.y = have / want; t.offset.y = (1 - t.repeat.y) / 2; }
+  });
+  wallpaper.colorSpace = THREE.SRGBColorSpace; wallpaper.anisotropy = 8;
+  const screenMat = new THREE.MeshBasicMaterial({ color: 0xffffff, map: wallpaper, toneMapped: false });
   const MON = { x: 285, z: -262, y: 335 };
   for (const side of [-1, 1]) {
     const mon = new THREE.Group();
     const add = (geo, material, x, y, z) => { const m = new THREE.Mesh(geo, material); m.position.set(x, y, z); mon.add(m); return m; };
-    add(new THREE.BoxGeometry(552, 332, 14), bezel, 0, MON.y, 0);
-    add(new THREE.PlaneGeometry(531, 299), screenMat, 0, MON.y + 6, 7.1);
-    add(new THREE.PlaneGeometry(300, 190), winMat, side * -70, MON.y + 22, 7.2);
-    add(new THREE.PlaneGeometry(300, 16), barMat, side * -70, MON.y + 109, 7.3);
-    add(new THREE.PlaneGeometry(531, 14), bezel, 0, MON.y - 137, 7.3);
-    add(new THREE.BoxGeometry(46, 250, 18), standMat, 0, 140, -22);
-    add(new THREE.BoxGeometry(250, 8, 190), standMat, 0, 4, -10);
+    add(new THREE.BoxGeometry(546, 326, 12), bezel, 0, MON.y, 0);
+    add(new THREE.PlaneGeometry(531, 299), screenMat, 0, MON.y + 8, 6.1);
+    add(new THREE.BoxGeometry(110, 110, 22), bezel, 0, MON.y, -16);          // arm joint to the shared stand
     mon.position.set(side * MON.x, 0, MON.z); mon.rotation.y = -side * 0.14;
     desk.add(mon);
   }
+  // dual monitor stand: one column, one crossbar, one base
+  const standPart = (w, h, d, x, y, z) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), standMat); m.position.set(x, y, z); desk.add(m); };
+  standPart(60, 330, 22, 0, 175, MON.z - 62);
+  standPart(700, 46, 16, 0, MON.y, MON.z - 46);
+  standPart(300, 8, 220, 0, 4, MON.z - 30);
   const kb = new THREE.Mesh(new THREE.BoxGeometry(440, 16, 130), bezel);
   kb.position.set(-30, 8, 190); desk.add(kb);
   const keys = new THREE.InstancedMesh(new THREE.BoxGeometry(22, 5, 19), new THREE.MeshStandardMaterial({ color: 0x24272d, roughness: 0.6 }), 85);
@@ -252,10 +257,10 @@ export function createStage(canvas) {
   const mouse = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 16), bezel);
   mouse.scale.set(31, 19, 55); mouse.position.set(290, 8, 195); desk.add(mouse);
   const bracket = new THREE.Mesh(new THREE.BoxGeometry(120, 120, 5), standMat);
-  bracket.position.set(-MON.x, MON.y, MON.z - 12); bracket.rotation.y = 0.14; desk.add(bracket);
+  bracket.position.set(-MON.x - 115, MON.y - 95, MON.z + 6); bracket.rotation.y = 0.14; desk.add(bracket);
   desk.traverse((o) => { if (o.isMesh && o.material !== screenMat) o.castShadow = true; });
   scene.add(desk);
-  const MOUNT = new THREE.Vector3(-MON.x - 4, MON.y, MON.z - 31);
+  const MOUNT = new THREE.Vector3(-MON.x - 118, MON.y - 95, MON.z - 12);
 
   const cablePath = new THREE.CatmullRomCurve3([v(-36, 17, -50), v(-37, 6, -86), v(-60, 2.4, -118), v(-140, 4, -112), v(-158, 12, -78)]);
   const cable = new THREE.Mesh(new THREE.TubeGeometry(cablePath, 80, 1.7, 10), new THREE.MeshStandardMaterial({ color: 0x2456c9, roughness: 0.5, transparent: true }));

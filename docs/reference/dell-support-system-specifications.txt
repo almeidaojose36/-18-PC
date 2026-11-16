@@ -1,0 +1,38 @@
+Dell Wyse 3040 Thin Client User Guide — System specifications
+Source: https://www.dell.com/support/manuals/en-ca/wyse-3040-thin-client/3040_ug/system-specifications?guid=guid-b35dd1df-32f3-4c36-84a9-52d9a5c0810c&lang=en-us
+Captured: 2026-11-16
+
+Ambient operation: 0 to 40 C (32 to 104 F)
+Non-operation temperature: -40 to 65 C (-40 to 149 F)
+Humidity: 20% to 80% non-condensing
+Maximum altitude: -15.2 to 3048 m (-50 to 10,000 ft)
+
+SOC/CPU: Intel Cherry Trail x5-Z8350, 1.44 GHz quad-core
+Graphics: built-in graphics controller supporting dual display up to 2560 x 1600 at 60 Hz
+System memory: 2 GB DDR3L 1600 MHz, soldered down
+Storage: 8 GB eMMC flash chip or 16 GB eMMC flash chip, soldered down
+Network: LAN, 10/100/1000 Base-T Ethernet
+Optional WLAN/Bluetooth: AzureWave AW-CM389MA with Marvell 8897 chip, M.2 2230 SDIO interface
+
+LED: one white/amber LED on power button
+USB 2.0: one USB 2.0 in one table; two stacked USB 2.0 ports in another port table
+USB 3.0: one USB 3.0
+Audio: one universal audio jack
+DisplayPort: two DP
+Physical security: one Kensington lock slot
+Network: one UTP RJ-45
+
+Chassis: new Dell Wyse ID; sealed chassis, accessible with tools
+Optional mounting: wall mount / VESA mount
+Height: 27.94 mm
+Width: 101.6 mm
+Depth: 101.6 mm
+Weight: 0.24 kg (0.53 lb)
+Supported HDD/SSD count: 0
+
+Power input: 3 A, 5 V DC, compliant with L.P.S.
+Power input: 2 A, 12 V DC, compliant with L.P.S.
+BIOS: standard BIOS and UEFI as implemented using AMI Dell BIOS
+Wake-on-LAN: yes
+
+OS and system software listed: ThinLinux 1.0.4 post-RTS; ThinOS 8.3.2; PCoIP-enabled Wyse ThinOS.

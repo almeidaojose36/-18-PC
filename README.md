@@ -37,6 +37,7 @@ interrupted render resumes when you run the command again.
 | Path | What it is |
 | :--- | :--- |
 | `docs/script-and-blueprint.md` | The source script and dimensional blueprint |
+| `docs/reference/` | Dell's product notes, support specifications and source list for this model |
 | `src/script.json` | The script as data: chapters and lines (`o1` … `f5`) |
 | `src/model.js` | Procedural Wyse 3040 assembly, 1 unit = 1 mm, one named group per part |
 | `src/scenes.js` | Shot list: camera, explode state, labels and callouts for every line |
@@ -62,8 +63,8 @@ sides, the smooth front band with the power button on top, the round Dell logo a
 port order on the front (headset, USB 2.0, USB 3.0), and the rear layout (DC in, two
 DisplayPorts, stacked USB 2.0, Ethernet). Overall size, PCB, SoC package and die, RAM,
 eMMC and M.2 2230 footprint use the blueprint dimensions. Port legends and the DisplayPort 1 / 2 markings are drawn as textures. The desk scene
-(two 24-inch monitors, wired keyboard and mouse, behind-monitor mount) follows the
-accessory list in Dell's datasheet; those props are generic shapes. The lattice pitch, exact port
+(two monitors on a dual stand, keyboard and mouse, behind-monitor mount) follows the
+recommended accessories on Dell's product page; those props are generic shapes. The lattice pitch, exact port
 positions, small board components and the silicon floorplan are estimated, not measured.
 
 The board follows teardown photos of both faces. The heatsink, SoC and eMMC are on the

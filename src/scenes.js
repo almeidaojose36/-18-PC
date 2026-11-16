@@ -24,7 +24,7 @@ export const BASE = {
 export const SHOTS = {
   // ---- Cold open -------------------------------------------------------------------
   o1: { d: 300, az: 35, el: 18, hover: 22, rotY: 40, tr: 'full', callout: ['$18', 'Dell Wyse 3040 · used, 2026'] },
-  o2: { flip: 1, ghost: 1, hover: 40, el: 38, az: 20, d: 280, tr: 2.2, hl: ['soc', 'ram', 'emmc'], callout: ['4 cores · 2 GB · 16 GB', 'Atom x5-Z8350 · DDR3L · eMMC flash'] },
+  o2: { flip: 1, ghost: 1, hover: 40, el: 38, az: 20, d: 280, tr: 2.2, hl: ['soc', 'ram', 'emmc'], callout: ['4 cores · 2 GB · 8 GB', 'Atom x5-Z8350 · DDR3L · eMMC flash'] },
   o3: { flip: 0, ghost: 0, hover: 0, rotY: 0, az: -28, el: 14, d: 340, video: 1, stutter: 1, cores: 1, tr: 2.2 },
   o4: { video: 0, stutter: 0, cores: 0, az: 25, d: 300, callout: ['$428', 'Dell’s price for a new one'] },
   o5: { d: 200, az: 42, el: 10, tr: 'full' },
@@ -44,8 +44,8 @@ export const SHOTS = {
   b2: { d: 200, el: 30, az: 40, hl: ['heatsink'], labels: [['heatsink', 'Passive aluminium heatsink']] },
   b3: { sink: 1, el: 44, d: 210, tr: 2.4 },
   b4: { tx: 6, tz: 22, d: 110, el: 52, az: 20, hl: ['ram'], labels: [['ram', '2 GB DDR3L-1600 · two soldered chips']] },
-  b5: { tx: -24, tz: 4, d: 95, el: 50, az: -20, hl: ['emmc'], labels: [['emmc', '16 GB eMMC flash']] },
-  b6: { d: 120, hl: ['emmc'], callout: ['16 GB → 14.7 GB', 'decimal gigabytes vs. binary gibibytes'] },
+  b5: { tx: -24, tz: 4, d: 95, el: 50, az: -20, hl: ['emmc'], labels: [['emmc', '8 GB eMMC flash']] },
+  b6: { d: 120, hl: ['emmc'], callout: ['8 GB → 7.4 GB', 'decimal gigabytes vs. binary gibibytes'] },
   b7: { tx: 34, tz: 10, az: 35, el: 48, d: 135, hl: ['m2'] },
   b8: { d: 95, el: 58, hl: ['m2'], labels: [['m2', 'M.2 2230 · E-key · Wi-Fi / Bluetooth only']] },
   b9: { tx: 0, tz: 0, d: 290, el: 40, az: 20, callout: ['Thin client', 'one job: be a window onto a server'] },
@@ -112,6 +112,6 @@ export const SHOTS = {
   f4b: { tx: -20, ty: 14, tz: 0, d: 300, az: 20, el: 18, callout: ['Fireport', 'default BIOS password on used units'] },
   f4c: { az: 62, d: 380 },
   b1a: { screws: 1, board: 1, tx: 0, tz: 0, d: 300, el: 38, az: 25, tr: 'full' },
-  a4b: { desk: 1, fov: 30, tx: -330, ty: 175, tz: -80, d: 1750, az: 14, el: 12, tr: 3, callout: ['Built for this desk', 'two 24″ monitors · wired keyboard and mouse · monitor mount'] },
-  a4c: { mount: 1, tx: -230, ty: 320, tz: -290, d: 560, az: 205, el: 8, tr: 3.2, callout: ['Hidden behind the screen', 'Wyse 3040 monitor mount'] },
+  a4b: { desk: 1, fov: 30, tx: -260, ty: 150, tz: -80, d: 2050, az: 14, el: 12, tr: 3, callout: ['Built for this desk', 'dual-monitor stand · keyboard and mouse · monitor mount'] },
+  a4c: { mount: 1, tx: -300, ty: 260, tz: -290, d: 640, az: 205, el: 8, tr: 3.2, callout: ['Hidden behind the screen', 'Wyse 3040 monitor mount'] },
 };

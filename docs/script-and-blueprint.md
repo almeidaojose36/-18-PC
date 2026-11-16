@@ -1,7 +1,7 @@
 # Why an $18 PC Can't Play a YouTube Video in 2026 — Full Narration Script & 3D Blueprint
 
 **Target Runtime:** ~11 minutes (Cold Open + 6 Chapters)  
-**Subject:** Dell Wyse 3040 Thin Client (`101.6 × 101.6 × 27.94 mm`, `0.24 kg`, Intel Atom x5-Z8350, 2 GB DDR3L, 16 GB eMMC)  
+**Subject:** Dell Wyse 3040 Thin Client (`101.6 × 101.6 × 27.94 mm`, `0.24 kg`, Intel Atom x5-Z8350, 2 GB DDR3L, 8 GB eMMC)  
 **Companion 3D Mesh:** `dell_wyse_3040_assembly.obj` (millimeter-accurate multi-part 3D assembly for Three.js / Blender)
 
 ---
@@ -9,7 +9,7 @@
 ## Cold Open (about 0:45)
 
 **o1.** This entire computer fits in the palm of your hand. And in 2026, it costs eighteen dollars.
-**o2.** Inside sits a quad-core processor, two gigabytes of memory, and sixteen gigabytes of flash storage.
+**o2.** Inside sits a quad-core processor, two gigabytes of memory, and eight gigabytes of flash storage.
 **o3.** Plug it into a monitor, open YouTube, and something strange happens. It stutters, drops frames, and hits a brick wall.
 **o4.** Yet it still sells for over four hundred dollars new on enterprise catalogs—and thousands of engineers swear by it.
 **o5.** So what is actually broken inside this eighteen-dollar box?
@@ -27,7 +27,7 @@
 **a3.** On the front sit two USB ports—one blue USB 3.0, one USB 2.0—and a single headphone jack.
 **a4.** Spin it around to the back, and you find two full-size DisplayPorts, two more USB 2.0 ports, a gigabit Ethernet jack, and a tiny barrel power plug.
 **a4a.** Those DisplayPorts can drive two monitors at once, at up to twenty-five sixty by sixteen hundred each.
-**a4b.** Dell's own accessory list shows where it was meant to live: two office monitors, a plain wired keyboard and mouse, and a bracket that bolts the whole computer to the back of a screen.
+**a4b.** Dell's own accessory list shows where it was meant to live: a pair of office monitors on a shared stand, a keyboard and mouse, and a bracket that bolts the whole computer to the back of a screen.
 **a4c.** Mounted there, most people who used one never even saw it.
 **a5.** Notice what is missing. No vents. No fan grille. No spinning blades.
 **a6.** That is your first clue. A normal desktop pulls sixty to two hundred watts and needs fans to survive. This entire computer runs on less power than a nightlight.
@@ -49,9 +49,9 @@
 **b1a.** The processor is not even on this side. Two screws release the board, and flipping it over reveals what was pressed up against the lid.
 **b2.** Covering the middle is a flat black aluminum block. No heat pipes, no copper fins, no fan—just a slab of metal soaking heat into still air.
 **b3.** Lift the heatsink off, and the compromises show up immediately.
-**b5.** Right beside the processor sits a single flat black chip: sixteen gigabytes of eMMC flash storage. Not a fast NVMe drive—essentially the same kind of storage soldered inside a budget tablet.
+**b5.** Right beside the processor sits a single flat black chip: eight gigabytes of eMMC flash storage. Not a fast NVMe drive—essentially the same kind of storage soldered inside a budget tablet.
 **b5a.** eMMC is a single chip with its controller built in—cheap, compact, and several times slower than a modern SSD.
-**b6.** Plug it into Windows and it reports **14.7 gigabytes**—not because storage is missing, but because manufacturers count in powers of ten while operating systems count in powers of two.
+**b6.** Plug it into Windows and it reports about **7.4 gigabytes**—not because storage is missing, but because manufacturers count in powers of ten while operating systems count in powers of two.
 **b6a.** Either way, Windows 10 officially asks for thirty-two gigabytes of storage. Windows 11 wants sixty-four, plus four gigabytes of RAM. This box has neither.
 **b9.** Everything here was stripped down for one job: **being a thin client**.
 **b10.** In an office, this box is not supposed to run Excel or YouTube locally. It is meant to boot a tiny firmware, send your keyboard and mouse over Ethernet to a data-center server, and stream back a video of your desktop.
@@ -108,7 +108,7 @@
 **e1.** Even with video fixed, one wall remains: **two gigabytes of RAM**.
 **e1a.** Windows 10 lists two gigabytes as its bare minimum. On this box, the system alone takes more than half of it before you open anything.
 **e2.** Open a single modern browser tab in 2026, and JavaScript, images, and background scripts easily swallow one to one-and-a-half gigabytes on their own.
-**e3.** The moment memory fills up, the system has to dump overflow onto that slow sixteen-gigabyte eMMC flash chip—and everything freezes.
+**e3.** The moment memory fills up, the system has to dump overflow onto that slow eight-gigabyte eMMC flash chip—and everything freezes.
 **e4.** Strip away heavy desktop environments and run a bare-bones Linux or text-only server OS, and memory usage drops below two hundred megabytes.
 **e4a.** Add a Linux feature called **zram**, and the system compresses idle data inside RAM instead of writing it to flash.
 **e5.** Suddenly, this tiny board has breathing room again.
