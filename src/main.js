@@ -239,5 +239,5 @@ function captureFrame(t, dt) {
     if (a.currentTime >= a.effect.getComputedTiming().endTime) a.finish();
   }
 }
-window.player = { segs, duration: DURATION, seek, play: () => setPlaying(true), pause: () => setPlaying(false), frame: captureFrame };
+window.player = { stage, segs, duration: DURATION, seek, play: () => setPlaying(true), pause: () => setPlaying(false), frame: captureFrame };
 if (capture) document.body.classList.add('clean'); else requestAnimationFrame(frame);

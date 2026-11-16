@@ -43,7 +43,7 @@ if (arg('chunk')) {
   for (let f = Math.max(0, from - WARMUP); f < to; f++) {
     await page.evaluate(([t, dt]) => window.player.frame(t, dt), [f / fps, 1 / fps]);
     if (f < from) continue;
-    const jpg = await page.screenshot({ type: 'jpeg', quality: 95 });
+    const jpg = await page.screenshot({ type: 'jpeg', quality: 95, timeout: 180000 });
     if (!ff.stdin.write(jpg)) await new Promise((r) => ff.stdin.once('drain', r));
     if ((f - from) % 150 === 0) console.log(`chunk ${from}: ${f - from}/${to - from}`);
   }
@@ -64,10 +64,10 @@ if (arg('chunk')) {
     if (!fs.existsSync(file)) queue.push({ from, to: Math.min(total, from + per), file });
   }
   let finished = chunks.length - queue.length;
-  const runOne = ({ from, to, file }) => new Promise((res, rej) => {
+  const runOne = ({ from, to, file, tries = 0 }) => new Promise((res, rej) => {
     const part = file.replace(/\.mp4$/, '.part.mp4');
     const child = spawn(process.execPath, [fileURLToPath(import.meta.url), ...process.argv.slice(2), '--chunk', part, '--from', from, '--to', to], { stdio: ['ignore', 'ignore', 'inherit'] });
-    child.on('close', (c) => { if (c) return rej(new Error(`chunk at frame ${from} failed`)); fs.renameSync(part, file); console.log(`chunk ${++finished}/${chunks.length} done, ${((Date.now() - t0) / 60000).toFixed(1)} min`); res(); });
+    child.on('close', (c) => { if (c) return tries < 2 ? res(runOne({ from, to, file, tries: tries + 1 })) : rej(new Error(`chunk at frame ${from} failed`)); fs.renameSync(part, file); console.log(`chunk ${++finished}/${chunks.length} done, ${((Date.now() - t0) / 60000).toFixed(1)} min`); res(); });
   });
   await Promise.all(Array.from({ length: workers }, async () => { while (queue.length) await runOne(queue.shift()); }));
   console.log(`frames done in ${((Date.now() - t0) / 60000).toFixed(1)} min; mixing audio`);

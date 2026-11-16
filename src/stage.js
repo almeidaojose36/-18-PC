@@ -23,12 +23,15 @@ function badgeTexture() {
 }
 
 export function createStage(canvas) {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !new URLSearchParams(location.search).get('noaa'), preserveDrawingBuffer: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  // ?shadow=pcf|basic|off trades shadow softness for speed (used for software-rendered export)
+  const shadowMode = new URLSearchParams(location.search).get('shadow') || 'soft';
+  renderer.shadowMap.enabled = shadowMode !== 'off';
+  renderer.shadowMap.type = { soft: THREE.PCFSoftShadowMap, pcf: THREE.PCFShadowMap, basic: THREE.BasicShadowMap }[shadowMode] ?? THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(BG);
