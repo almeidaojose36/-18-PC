@@ -1,0 +1,142 @@
+# Dell Wyse 3040 materials
+
+newmtl chassis_abs
+Kd 0.0070 0.0070 0.0080
+Ks 0.2 0.2 0.2
+Ns 140
+Pr 0.65
+Pm 0
+
+newmtl cover_abs
+Kd 0.0070 0.0070 0.0080
+Ks 0.2 0.2 0.2
+Ns 140
+Pr 0.65
+Pm 0
+
+newmtl rubber_feet
+Kd 0.0024 0.0024 0.0030
+Ks 0.2 0.2 0.2
+Ns 20
+Pr 0.95
+Pm 0
+
+newmtl screw_steel
+Kd 0.3231 0.3325 0.3663
+Ks 0.9 0.9 0.9
+Ns 260
+Pr 0.35
+Pm 0.9
+
+newmtl dell_badge
+Kd 0.5841 0.6038 0.6445
+Ks 0.9 0.9 0.9
+Ns 300
+Pr 0.25
+Pm 0.95
+
+newmtl pcb_soldermask
+Kd 0.0048 0.0545 0.0296
+Ks 0.2 0.2 0.2
+Ns 220
+Pr 0.45
+Pm 0.1
+
+newmtl pcb_silkscreen
+Kd 0.7379 0.8070 0.7605
+Ks 0.2 0.2 0.2
+Ns 80
+Pr 0.8
+Pm 0
+
+newmtl gold_contacts
+Kd 0.6939 0.3712 0.0529
+Ks 0.9 0.9 0.9
+Ns 280
+Pr 0.3
+Pm 1
+
+newmtl heatsink_anodized
+Kd 0.0103 0.0103 0.0123
+Ks 0.9 0.9 0.9
+Ns 260
+Pr 0.35
+Pm 0.85
+
+newmtl soc_substrate
+Kd 0.0137 0.0423 0.0252
+Ks 0.2 0.2 0.2
+Ns 180
+Pr 0.55
+Pm 0.1
+
+newmtl silicon_die
+Kd 0.2705 0.3050 0.3916
+Ks 0.9 0.9 0.9
+Ns 352
+Pr 0.12
+Pm 1
+
+newmtl ic_epoxy
+Kd 0.0052 0.0052 0.0060
+Ks 0.2 0.2 0.2
+Ns 160
+Pr 0.6
+Pm 0
+
+newmtl connector_steel
+Kd 0.1620 0.1714 0.1946
+Ks 0.9 0.9 0.9
+Ns 220
+Pr 0.45
+Pm 0.95
+
+newmtl port_cavity
+Kd 0.0015 0.0015 0.0018
+Ks 0.2 0.2 0.2
+Ns 40
+Pr 0.9
+Pm 0
+
+newmtl usb3_tongue_blue
+Kd 0.0075 0.1301 0.6867
+Ks 0.2 0.2 0.2
+Ns 200
+Pr 0.5
+Pm 0
+
+newmtl usb2_tongue_black
+Kd 0.0116 0.0116 0.0137
+Ks 0.2 0.2 0.2
+Ns 200
+Pr 0.5
+Pm 0
+
+newmtl connector_plastic
+Kd 0.0037 0.0037 0.0044
+Ks 0.2 0.2 0.2
+Ns 180
+Pr 0.55
+Pm 0
+
+newmtl power_led
+Kd 1.0000 1.0000 1.0000
+Ks 0.2 0.2 0.2
+Ns 240
+Pr 0.4
+Pm 0
+Ke 1 1 1
+
+newmtl coin_cell
+Kd 0.5776 0.5906 0.6240
+Ks 0.9 0.9 0.9
+Ns 300
+Pr 0.25
+Pm 1
+
+newmtl smd_passive
+Kd 0.2542 0.1590 0.0742
+Ks 0.2 0.2 0.2
+Ns 160
+Pr 0.6
+Pm 0
