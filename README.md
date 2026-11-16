@@ -21,8 +21,6 @@ time in seconds, `?cc=0` hides captions, `?mute=1` disables narration.
 
 ## Export an MP4
 
-With the dev server running:
-
 ```bash
 npm run render -- --out out/video.mp4
 ```

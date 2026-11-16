@@ -1,6 +1,5 @@
 // Renders the explainer to an MP4, frame by frame, in headless Chromium.
 //
-//   npm run dev            (in another terminal; or pass --url)
 //   npm run render -- --out out/video.mp4 [--fps 30] [--width 1920] [--height 1080] [--workers 4]
 //                     [--headed] [--software]
 //
@@ -19,7 +18,7 @@ const { chromium } = require('playwright');
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (name, dflt) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1] : dflt; };
 const fps = +arg('fps', 30), width = +arg('width', 1920), height = +arg('height', 1080);
-const url = arg('url', 'http://localhost:5173/');
+let url = arg('url');   // set by the master for its workers; omit to let the script serve the project itself
 const out = path.resolve(arg('out', path.join(root, 'out/video.mp4')));
 const workers = +arg('workers', Math.max(1, Math.min(8, os.cpus().length)));
 const tmp = path.resolve(arg('tmp', path.join(path.dirname(out), '.render')));
@@ -60,6 +59,14 @@ if (arg('chunk')) {
   ff.stdin.end(); await done; await browser.close();
 } else {
   // ---- master ---------------------------------------------------------------------------
+  let server;
+  if (!url) {
+    const { createServer } = await import('vite');
+    server = await createServer({ root, logLevel: 'error', server: { port: 5199 } });
+    await server.listen();
+    url = server.resolvedUrls.local[0];
+    process.argv.push('--url', url);
+  }
   fs.mkdirSync(tmp, { recursive: true });
   const { browser, page } = await open();
   const { duration, clips } = await page.evaluate(() => ({ duration: window.player.duration, clips: window.player.segs.map((s) => [s.id, s.start]) }));
@@ -91,5 +98,6 @@ if (arg('chunk')) {
     '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', out], { stdio: 'inherit' });
   if (r.status) process.exit(r.status);
   fs.rmSync(tmp, { recursive: true, force: true });
+  await server?.close();
   console.log(`wrote ${out} (${(fs.statSync(out).size / 1e6).toFixed(1)} MB)`);
 }
