@@ -28,6 +28,9 @@ export function makeMaterials() {
     rubber: mat('rubber_feet', { color: 0x08080a, roughness: 0.95, transparent: true }),
     screw: mat('screw_steel', { color: 0x9a9ca3, roughness: 0.35, metalness: 0.9, transparent: true }),
     sticker: mat('sticker_blue', { color: 0x0d4f8f, roughness: 0.45 }),
+    lockRing: mat('lock_slot_surround', { color: 0xb9bcc2, roughness: 0.5, transparent: true }),
+    printFront: mat('printed_icons_front', { color: 0xc4c7cc, roughness: 0.6, transparent: true }),
+    printRear: mat('printed_icons_rear', { color: 0xc4c7cc, roughness: 0.6, transparent: true }),
     print: mat('printed_text', { color: 0xd8dade, roughness: 0.6, transparent: true }),
     badge: mat('dell_badge', { color: 0xc9ccd2, roughness: 0.25, metalness: 0.95 }),
     pcb: mat('pcb_soldermask', { color: 0x185a30, roughness: 0.45, metalness: 0.1 }),
@@ -148,7 +151,7 @@ function connector(g, M, { x, w, h, depth, dir, face }) {
   face(plane, x, h);
 }
 
-export function buildWyse3040({ decor = true, badgeTexture = null, nameTexture = null } = {}) {
+export function buildWyse3040({ decor = true, badgeTexture = null, nameTexture = null, frontIcons = null, rearIcons = null } = {}) {
   const M = makeMaterials();
   const unit = new THREE.Group();
   unit.name = 'dell_wyse_3040';
@@ -176,8 +179,8 @@ export function buildWyse3040({ decor = true, badgeTexture = null, nameTexture =
     shell.add(new THREE.Mesh(g, M.plastic));
   }
   // Kensington lock slot with its light surround, in the lattice just behind the front band
-  box(shell, 1.7, 9, 5, M.print, -XI - 0.9, -2.5, ZB - 8);
-  box(shell, 1.8, 6.5, 2.6, M.cavity, -XI - 0.9, -1.25, ZB - 8);
+  box(shell, 1.7, 7, 3.6, M.lockRing, -XI - 0.9, -1.5, ZB - 8);
+  box(shell, 1.8, 5.4, 2, M.cavity, -XI - 0.9, -0.7, ZB - 8);
   // PCB standoffs
   for (const [hx, hz] of HOLES) cyl(shell, 3, BOARD_Y - (base + 2), M.plastic, -hx, base + 2, hz);
 
@@ -191,6 +194,18 @@ export function buildWyse3040({ decor = true, badgeTexture = null, nameTexture =
   const badgeMesh = new THREE.Mesh(ringGeo, badgeMat);
   badgeMesh.position.set(-36, -1, FRONT_Z + 0.05);
   badge.add(badgeMesh);
+  // Printed port icons: a strip under the front ports and one under the rear ports
+  // (100 x 5 mm each; textures are drawn in upright, viewer-facing orientation)
+  if (frontIcons) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(100, 5), Object.assign(M.printFront, { map: frontIcons }));
+    m.rotation.z = Math.PI; m.position.set(0, 7.6, FRONT_Z + 0.05);
+    shell.add(m);
+  }
+  if (rearIcons) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(100, 5), Object.assign(M.printRear, { map: rearIcons }));
+    m.rotation.x = Math.PI; m.position.set(0, 8.4, REAR_Z - 0.05);
+    shell.add(m);
+  }
   if (nameTexture) {
     const name = new THREE.Mesh(new THREE.PlaneGeometry(24, 4), Object.assign(M.print, { map: nameTexture }));
     name.rotation.z = Math.PI; name.position.set(35, -9.2, FRONT_Z + 0.05);

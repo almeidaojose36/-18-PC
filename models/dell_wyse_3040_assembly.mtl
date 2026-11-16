@@ -35,6 +35,27 @@ Ns 220
 Pr 0.45
 Pm 0
 
+newmtl lock_slot_surround
+Kd 0.4851 0.5029 0.5395
+Ks 0.2 0.2 0.2
+Ns 200
+Pr 0.5
+Pm 0
+
+newmtl printed_icons_front
+Kd 0.5520 0.5711 0.6038
+Ks 0.2 0.2 0.2
+Ns 160
+Pr 0.6
+Pm 0
+
+newmtl printed_icons_rear
+Kd 0.5520 0.5711 0.6038
+Ks 0.2 0.2 0.2
+Ns 160
+Pr 0.6
+Pm 0
+
 newmtl printed_text
 Kd 0.6867 0.7011 0.7305
 Ks 0.2 0.2 0.2

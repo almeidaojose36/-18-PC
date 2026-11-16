@@ -33,6 +33,53 @@ function nameTexture() {
   return t;
 }
 
+// Port legends, drawn at 20 px per mm on a 100 x 5 mm strip; x is millimetres from the centre
+// as the viewer sees that face.
+function iconStrip(draw) {
+  const c = document.createElement('canvas');
+  c.width = 2000; c.height = 100;
+  const g = c.getContext('2d');
+  g.strokeStyle = g.fillStyle = '#fff'; g.lineWidth = 5; g.lineCap = 'round'; g.lineJoin = 'round';
+  g.font = '600 46px Helvetica, Arial, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  const X = (mm) => 1000 + mm * 20;
+  const usb = (mm, ss) => {            // USB trident, optionally prefixed with "SS"
+    const x = X(mm) + (ss ? 26 : 0), y = 50;
+    if (ss) g.fillText('SS', x - 78, y + 3);
+    g.beginPath(); g.moveTo(x - 44, y); g.lineTo(x + 36, y); g.stroke();
+    g.beginPath(); g.arc(x - 44, y, 9, 0, 7); g.fill();
+    g.beginPath(); g.moveTo(x + 50, y); g.lineTo(x + 30, y - 11); g.lineTo(x + 30, y + 11); g.closePath(); g.fill();
+    g.beginPath(); g.moveTo(x - 22, y); g.lineTo(x - 6, y - 22); g.lineTo(x + 12, y - 22); g.stroke();
+    g.beginPath(); g.arc(x + 14, y - 22, 7, 0, 7); g.fill();
+    g.beginPath(); g.moveTo(x - 8, y); g.lineTo(x + 8, y + 22); g.lineTo(x + 20, y + 22); g.stroke();
+    g.fillRect(x + 18, y + 15, 14, 14);
+  };
+  draw(g, X, usb);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  return t;
+}
+const frontIconTexture = () => iconStrip((g, X, usb) => {
+  const x = X(-37), y = 52;                               // headset
+  g.beginPath(); g.arc(x, y, 20, Math.PI, 0); g.stroke();
+  g.fillRect(x - 27, y - 2, 12, 24); g.fillRect(x + 15, y - 2, 12, 24);
+  g.beginPath(); g.moveTo(x + 21, y + 22); g.quadraticCurveTo(x + 20, y + 38, x + 2, y + 38); g.stroke();
+  usb(-10, false); usb(11.5, true);
+});
+const rearIconTexture = () => iconStrip((g, X, usb) => {
+  let x = X(-43);                                         // DC in: solid line over dashed line
+  g.beginPath(); g.moveTo(x - 34, 38); g.lineTo(x + 34, 38); g.stroke();
+  g.setLineDash([14, 13]); g.beginPath(); g.moveTo(x - 34, 60); g.lineTo(x + 34, 60); g.stroke(); g.setLineDash([]);
+  g.font = '500 40px Helvetica, Arial, sans-serif';      // DisplayPort 1 / 2 with bracket and logo
+  g.fillText('1', X(-25.5), 22); g.fillText('2', X(-5.5), 22);
+  g.lineWidth = 4; g.beginPath(); g.moveTo(X(-25.5), 48); g.lineTo(X(-25.5), 78); g.lineTo(X(-19.5), 78); g.moveTo(X(-11.5), 78); g.lineTo(X(-5.5), 78); g.lineTo(X(-5.5), 48); g.stroke();
+  x = X(-15.5); g.font = '800 44px Helvetica, Arial, sans-serif'; g.fillText('D', x + 4, 79);
+  g.fillRect(x - 24, 60, 9, 36); g.lineWidth = 5;
+  usb(13.5, false);
+  x = X(36);                                              // network
+  g.strokeRect(x - 12, 14, 24, 20); g.strokeRect(x - 40, 62, 24, 20); g.strokeRect(x + 16, 62, 24, 20); g.strokeRect(x - 12, 62, 24, 20);
+  g.beginPath(); g.moveTo(x, 34); g.lineTo(x, 62); g.moveTo(x - 28, 62); g.lineTo(x - 28, 48); g.lineTo(x + 28, 48); g.lineTo(x + 28, 62); g.stroke();
+});
+
 export function createStage(canvas) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !new URLSearchParams(location.search).get('noaa'), preserveDrawingBuffer: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -74,7 +121,7 @@ export function createStage(canvas) {
   scene.add(floor);
 
   // ---- The unit ---------------------------------------------------------------------
-  const model = buildWyse3040({ badgeTexture: badgeTexture(), nameTexture: nameTexture() });
+  const model = buildWyse3040({ badgeTexture: badgeTexture(), nameTexture: nameTexture(), frontIcons: frontIconTexture(), rearIcons: rearIconTexture() });
   const { unit, parts, bounds, materials: M, board, BOARD_Y } = model;
   for (const m of [M.sticker, M.badge]) m.transparent = true;
   unit.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
@@ -175,6 +222,41 @@ export function createStage(canvas) {
   for (let i = 0; i < 5; i++) { const l = new THREE.Mesh(new THREE.BoxGeometry(4, 1.6, 0.6), ledMat); l.position.set(-40 + i * 12, 14, 47.8); router.add(l); }
   router.position.set(-175, 0, -30);
   scene.add(router);
+  // ---- Desk set from Dell's accessory list: two 24" monitors, wired keyboard + mouse, and the
+  // bracket that mounts the unit behind a screen ----------------------------------------------
+  const desk = new THREE.Group();
+  const bezel = new THREE.MeshStandardMaterial({ color: 0x15171b, roughness: 0.5, metalness: 0.2 });
+  const standMat = new THREE.MeshStandardMaterial({ color: 0x9a9da3, roughness: 0.4, metalness: 0.7 });
+  const screenMat = new THREE.MeshBasicMaterial({ color: 0x16345f, toneMapped: false });
+  const winMat = new THREE.MeshBasicMaterial({ color: 0xdfe6f1, toneMapped: false });
+  const barMat = new THREE.MeshBasicMaterial({ color: 0x3c78d8, toneMapped: false });
+  const MON = { x: 285, z: -262, y: 335 };
+  for (const side of [-1, 1]) {
+    const mon = new THREE.Group();
+    const add = (geo, material, x, y, z) => { const m = new THREE.Mesh(geo, material); m.position.set(x, y, z); mon.add(m); return m; };
+    add(new THREE.BoxGeometry(552, 332, 14), bezel, 0, MON.y, 0);
+    add(new THREE.PlaneGeometry(531, 299), screenMat, 0, MON.y + 6, 7.1);
+    add(new THREE.PlaneGeometry(300, 190), winMat, side * -70, MON.y + 22, 7.2);
+    add(new THREE.PlaneGeometry(300, 16), barMat, side * -70, MON.y + 109, 7.3);
+    add(new THREE.PlaneGeometry(531, 14), bezel, 0, MON.y - 137, 7.3);
+    add(new THREE.BoxGeometry(46, 250, 18), standMat, 0, 140, -22);
+    add(new THREE.BoxGeometry(250, 8, 190), standMat, 0, 4, -10);
+    mon.position.set(side * MON.x, 0, MON.z); mon.rotation.y = -side * 0.14;
+    desk.add(mon);
+  }
+  const kb = new THREE.Mesh(new THREE.BoxGeometry(440, 16, 130), bezel);
+  kb.position.set(-30, 8, 190); desk.add(kb);
+  const keys = new THREE.InstancedMesh(new THREE.BoxGeometry(22, 5, 19), new THREE.MeshStandardMaterial({ color: 0x24272d, roughness: 0.6 }), 85);
+  for (let r = 0, n = 0; r < 5; r++) for (let c2 = 0; c2 < 17; c2++, n++) { o3.position.set(-30 - 208 + c2 * 26, 18, 190 - 48 + r * 24); o3.scale.set(1, 1, 1); o3.updateMatrix(); keys.setMatrixAt(n, o3.matrix); }
+  desk.add(keys);
+  const mouse = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 16), bezel);
+  mouse.scale.set(31, 19, 55); mouse.position.set(290, 8, 195); desk.add(mouse);
+  const bracket = new THREE.Mesh(new THREE.BoxGeometry(120, 120, 5), standMat);
+  bracket.position.set(-MON.x, MON.y, MON.z - 12); bracket.rotation.y = 0.14; desk.add(bracket);
+  desk.traverse((o) => { if (o.isMesh && o.material !== screenMat) o.castShadow = true; });
+  scene.add(desk);
+  const MOUNT = new THREE.Vector3(-MON.x - 4, MON.y, MON.z - 31);
+
   const cablePath = new THREE.CatmullRomCurve3([v(-36, 17, -50), v(-37, 6, -86), v(-60, 2.4, -118), v(-140, 4, -112), v(-158, 12, -78)]);
   const cable = new THREE.Mesh(new THREE.TubeGeometry(cablePath, 80, 1.7, 10), new THREE.MeshStandardMaterial({ color: 0x2456c9, roughness: 0.5, transparent: true }));
   cable.castShadow = true;
@@ -188,8 +270,12 @@ export function createStage(canvas) {
   function apply(S, t, shot, lineK, dt) {
     // unit pose
     const spin = shot.spin ? shot.spin * (lineK * lineK * (3 - 2 * lineK)) : 0;
-    unit.rotation.set(0, rad(S.rotY + spin), Math.PI * (1 - S.flip));
+    unit.rotation.set(-Math.PI / 2 * S.mount, rad(S.rotY + spin) + 0.14 * S.mount, Math.PI * (1 - S.flip));
     unit.position.y = HH + 0.8 * (1 - S.flip) + Math.sin(Math.PI * S.flip) * 48 + S.hover + (S.hover > 0.5 ? Math.sin(t * 0.9) * 1.5 : 0);
+    // on the monitor bracket: stood on edge behind the left screen
+    unit.position.set(MOUNT.x * S.mount, unit.position.y + (MOUNT.y - unit.position.y) * S.mount, MOUNT.z * S.mount);
+    desk.visible = S.desk > 0.01; desk.scale.setScalar(Math.max(S.desk, 0.0001));
+    scene.fog.near = Math.max(700, S.d * 1.6); scene.fog.far = Math.max(1900, S.d * 4);
 
     // teardown: base unclips -> board screws out -> board lifts out and flips heatsink-up
     // (the empty case fades away) -> heatsink lifts off and settles beside it
@@ -206,7 +292,7 @@ export function createStage(canvas) {
     parts.heatsink.position.set(-140 * sstep(S.sink, 0.25, 1), 42 * sstep(S.sink, 0, 0.5) - 57.2 * sstep(S.sink, 0.5, 1), 0);
     const solid = (1 - 0.88 * S.ghost) * caseFade;
     M.plastic.transparent = solid < 0.99; M.plastic.opacity = solid; M.plastic.depthWrite = solid > 0.5;
-    M.sticker.opacity = M.badge.opacity = M.print.opacity = caseFade;
+    M.sticker.opacity = M.badge.opacity = M.print.opacity = M.printFront.opacity = M.printRear.opacity = M.lockRing.opacity = caseFade;
     M.coverPlastic.opacity = fade * solid; M.rubber.opacity = fade * solid;
     M.coverPlastic.depthWrite = M.coverPlastic.opacity > 0.5;
 

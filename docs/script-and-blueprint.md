@@ -27,6 +27,8 @@
 **a3.** On the front sit two USB ports—one blue USB 3.0, one USB 2.0—and a single headphone jack.
 **a4.** Spin it around to the back, and you find two full-size DisplayPorts, two more USB 2.0 ports, a gigabit Ethernet jack, and a tiny barrel power plug.
 **a4a.** Those DisplayPorts can drive two monitors at once, at up to twenty-five sixty by sixteen hundred each.
+**a4b.** Dell's own accessory list shows where it was meant to live: two office monitors, a plain wired keyboard and mouse, and a bracket that bolts the whole computer to the back of a screen.
+**a4c.** Mounted there, most people who used one never even saw it.
 **a5.** Notice what is missing. No vents. No fan grille. No spinning blades.
 **a6.** That is your first clue. A normal desktop pulls sixty to two hundred watts and needs fans to survive. This entire computer runs on less power than a nightlight.
 **a6a.** Leave it running all year, and it uses roughly thirty-five kilowatt-hours—a few dollars of electricity.

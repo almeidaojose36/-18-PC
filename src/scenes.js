@@ -14,6 +14,7 @@ export const BASE = {
   cover: 0, screws: 0, board: 0, sink: 0,   // teardown: base off, board screws out, board out + flipped, heatsink off
   ghost: 0,    // x-ray chassis
   card: 0, router: 0, pulse: 0,   // props
+  desk: 0, mount: 0,              // office desk set; unit on the behind-monitor bracket
   die: 0, cores: 0, media: 0,     // silicon floorplan glow / CPU load / media engine
   packets: 0, codec: 0,           // stream packets; codec 0 = AV1 -> cores, 1 = H.264 -> media engine
   mem: 0, memOS: 0, memApp: 0,    // RAM grid (MB)
@@ -34,7 +35,7 @@ export const SHOTS = {
   a2: { az: -25, el: 16, d: 300, card: 0, callout: ['Dell Wyse 3040', 'a thin client — never built to be a desktop'] },
   a3: { az: 0, el: 4, fov: 14, d: 440, tr: 2, labels: [['usb3', 'USB 3.0'], ['usb2_front', 'USB 2.0', 1], ['audio', 'Headset']] },
   a4: { az: 180, tr: 2.4, labels: [['dp1', 'DisplayPort'], ['dp2', 'DisplayPort', 1], ['usb2_rear', '2× USB 2.0', 1], ['rj45', 'Gigabit Ethernet'], ['dc', 'DC in', 1]] },
-  a5: { az: 115, el: 30, fov: 30, d: 320, tr: 2.4, callout: ['No vents. No fan.', 'completely passive'] },
+  a5: { desk: 0, mount: 0, tx: 0, ty: 14, tz: 0,  az: 115, el: 30, fov: 30, d: 320, tr: 2.4, callout: ['No vents. No fan.', 'completely passive'] },
   a6: { az: 40, el: 18, callout: ['< 5 W', 'a desktop PC pulls 60 – 200 W'] },
   a7: { flip: 1, el: 48, az: 20, d: 300, tr: 2.6 },
 
@@ -111,4 +112,6 @@ export const SHOTS = {
   f4b: { tx: -20, ty: 14, tz: 0, d: 300, az: 20, el: 18, callout: ['Fireport', 'default BIOS password on used units'] },
   f4c: { az: 62, d: 380 },
   b1a: { screws: 1, board: 1, tx: 0, tz: 0, d: 300, el: 38, az: 25, tr: 'full' },
+  a4b: { desk: 1, fov: 30, tx: -330, ty: 175, tz: -80, d: 1750, az: 14, el: 12, tr: 3, callout: ['Built for this desk', 'two 24″ monitors · wired keyboard and mouse · monitor mount'] },
+  a4c: { mount: 1, tx: -230, ty: 320, tz: -290, d: 560, az: 205, el: 8, tr: 3.2, callout: ['Hidden behind the screen', 'Wyse 3040 monitor mount'] },
 };

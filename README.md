@@ -61,7 +61,9 @@ The exterior follows Dell's product images and teardown photos of the real unit:
 sides, the smooth front band with the power button on top, the round Dell logo and
 port order on the front (headset, USB 2.0, USB 3.0), and the rear layout (DC in, two
 DisplayPorts, stacked USB 2.0, Ethernet). Overall size, PCB, SoC package and die, RAM,
-eMMC and M.2 2230 footprint use the blueprint dimensions. The lattice pitch, exact port
+eMMC and M.2 2230 footprint use the blueprint dimensions. Port legends and the DisplayPort 1 / 2 markings are drawn as textures. The desk scene
+(two 24-inch monitors, wired keyboard and mouse, behind-monitor mount) follows the
+accessory list in Dell's datasheet; those props are generic shapes. The lattice pitch, exact port
 positions, small board components and the silicon floorplan are estimated, not measured.
 
 The board follows teardown photos of both faces. The heatsink, SoC and eMMC are on the
