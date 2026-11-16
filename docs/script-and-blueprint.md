@@ -36,20 +36,21 @@
 
 ## Chapter 2 — Inside the Shell: No Upgrades Allowed (about 2:15)
 
-*3D Scene: Two bottom screws unscrew and float away; the bottom shell lifts off to reveal the single green/dark-teal `~95 × 95 mm` motherboard. Camera orbits slowly at 35°.*
+*3D Scene: The base unclips to show the underside of the `~95 × 95 mm` board (RAM, M.2 slot, clock battery). Two screws release the board; it lifts out and flips to show the heatsink, SoC and eMMC.*
 
-**b1.** Two screws come out, the plastic shell lifts away, and you are looking at the entire computer. One square circuit board.
-**b2.** Covering the middle is a flat black aluminum block. No heat pipes, no copper fins, no fan—just a slab of metal soaking heat into still air.
-**b3.** Lift the heatsink off, and the compromises show up immediately.
-**b4.** There are no memory slots. Those two gigabytes of DDR3L memory are soldered directly onto the board—locked forever at sixteen hundred megahertz on a single channel.
+**b1.** Flip it over. The base unclips with a flat screwdriver, and you are looking at the entire computer. One square circuit board.
+**b4.** The first thing to notice: there are no memory slots. These two chips are the RAM—two gigabytes of DDR3L, soldered directly onto the board and locked forever at sixteen hundred megahertz on a single channel.
 **b4a.** And because there is no graphics card, the integrated GPU has no memory of its own. It borrows from those same two gigabytes.
-**b5.** Right beside it sits a single flat black chip: sixteen gigabytes of eMMC flash storage. Not a fast NVMe drive—essentially the same kind of storage soldered inside a budget tablet.
-**b5a.** eMMC is a single chip with its controller built in—cheap, compact, and several times slower than a modern SSD.
-**b6.** Plug it into Windows and it reports **14.7 gigabytes**—not because storage is missing, but because manufacturers count in powers of ten while operating systems count in powers of two.
-**b6a.** Either way, Windows 10 officially asks for thirty-two gigabytes of storage. Windows 11 wants sixty-four, plus four gigabytes of RAM. This box has neither.
 **b7.** And look at that small connector in the corner: an M.2 slot.
 **b8.** At first glance, it looks like a place for an SSD. Look closer at the notch—that is an **E-key** slot, wired for a tiny Wi-Fi and Bluetooth card, not a standard M-key drive.
 **b8a.** There is no SATA port and no drive bay either. If you want more storage, it has to hang off a USB port.
+**b1a.** The processor is not even on this side. Two screws release the board, and flipping it over reveals what was pressed up against the lid.
+**b2.** Covering the middle is a flat black aluminum block. No heat pipes, no copper fins, no fan—just a slab of metal soaking heat into still air.
+**b3.** Lift the heatsink off, and the compromises show up immediately.
+**b5.** Right beside the processor sits a single flat black chip: sixteen gigabytes of eMMC flash storage. Not a fast NVMe drive—essentially the same kind of storage soldered inside a budget tablet.
+**b5a.** eMMC is a single chip with its controller built in—cheap, compact, and several times slower than a modern SSD.
+**b6.** Plug it into Windows and it reports **14.7 gigabytes**—not because storage is missing, but because manufacturers count in powers of ten while operating systems count in powers of two.
+**b6a.** Either way, Windows 10 officially asks for thirty-two gigabytes of storage. Windows 11 wants sixty-four, plus four gigabytes of RAM. This box has neither.
 **b9.** Everything here was stripped down for one job: **being a thin client**.
 **b10.** In an office, this box is not supposed to run Excel or YouTube locally. It is meant to boot a tiny firmware, send your keyboard and mouse over Ethernet to a data-center server, and stream back a video of your desktop.
 **b10a.** The heavy lifting happens on a server down the hall, over protocols like RDP, Citrix, or VMware Horizon. The box on your desk is just a window.

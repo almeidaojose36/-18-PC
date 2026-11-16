@@ -75,7 +75,8 @@ export function createStage(canvas) {
 
   // ---- The unit ---------------------------------------------------------------------
   const model = buildWyse3040({ badgeTexture: badgeTexture(), nameTexture: nameTexture() });
-  const { unit, parts, bounds, materials: M } = model;
+  const { unit, parts, bounds, materials: M, board, BOARD_Y } = model;
+  for (const m of [M.sticker, M.badge]) m.transparent = true;
   unit.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   scene.add(unit);
 
@@ -122,13 +123,13 @@ export function createStage(canvas) {
 
   // ---- Stream packets (children of the unit so they follow it) --------------------------
   const v = (x, y, z) => new THREE.Vector3(x, y, z);
-  const pathCores = new THREE.CatmullRomCurve3([v(30, 6, -38), v(28, 13, -28), v(8, 13, -12), v(-2, 6, -4), v(-2.2, 1.7, -3.2)]);
-  const pathMedia = new THREE.CatmullRomCurve3([v(30, 6, -38), v(28, 13, -28), v(10, 13, -11), v(2, 6, -1.6), v(1.9, 1.7, -1.25)]);
+  const pathCores = new THREE.CatmullRomCurve3([v(-36, 6, -38), v(-32, 13, -28), v(-10, 13, -12), v(-2, 6, -4), v(-2.2, 1.7, -3.2)]);
+  const pathMedia = new THREE.CatmullRomCurve3([v(-36, 6, -38), v(-32, 13, -28), v(-8, 13, -11), v(2, 6, -1.6), v(1.9, 1.7, -1.25)]);
   const packetMat = new THREE.MeshBasicMaterial({ color: 0xff7a1a, toneMapped: false });
   const packets = [];
   for (let i = 0; i < 16; i++) {
     const p = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.2, 2.4), packetMat);
-    unit.add(p); packets.push(p);
+    board.add(p); packets.push(p);
   }
   const cAV1 = new THREE.Color(0xff7a1a), cH264 = new THREE.Color(0x2ee6c8);
   const pa = new THREE.Vector3(), pb = new THREE.Vector3();
@@ -174,7 +175,7 @@ export function createStage(canvas) {
   for (let i = 0; i < 5; i++) { const l = new THREE.Mesh(new THREE.BoxGeometry(4, 1.6, 0.6), ledMat); l.position.set(-40 + i * 12, 14, 47.8); router.add(l); }
   router.position.set(-175, 0, -30);
   scene.add(router);
-  const cablePath = new THREE.CatmullRomCurve3([v(-30, 8, -50), v(-31, 6, -84), v(-60, 2.4, -118), v(-140, 4, -112), v(-158, 12, -78)]);
+  const cablePath = new THREE.CatmullRomCurve3([v(-36, 17, -50), v(-37, 6, -86), v(-60, 2.4, -118), v(-140, 4, -112), v(-158, 12, -78)]);
   const cable = new THREE.Mesh(new THREE.TubeGeometry(cablePath, 80, 1.7, 10), new THREE.MeshStandardMaterial({ color: 0x2456c9, roughness: 0.5, transparent: true }));
   cable.castShadow = true;
   scene.add(cable);
@@ -190,17 +191,23 @@ export function createStage(canvas) {
     unit.rotation.set(0, rad(S.rotY + spin), Math.PI * (1 - S.flip));
     unit.position.y = HH + 0.8 * (1 - S.flip) + Math.sin(Math.PI * S.flip) * 48 + S.hover + (S.hover > 0.5 ? Math.sin(t * 0.9) * 1.5 : 0);
 
-    // explode
+    // teardown: base unclips -> board screws out -> board lifts out and flips heatsink-up
+    // (the empty case fades away) -> heatsink lifts off and settles beside it
     const cov = sstep(S.cover, 0.3, 1);
     const fade = 1 - sstep(S.cover, 0.6, 1);
     parts.cover.position.y = cov * 75;
-    parts.screws.position.y = sstep(S.screws, 0, 0.45) * 20 + cov * 75;
-    parts.cover.visible = parts.screws.visible = fade > 0.01;
-    // heatsink lifts off, then swings out and settles beside the unit
-    parts.heatsink.position.set(-128 * sstep(S.sink, 0.25, 1), 42 * sstep(S.sink, 0, 0.5) - 57.2 * sstep(S.sink, 0.5, 1), 0);
-    const solid = 1 - 0.88 * S.ghost;
-    M.plastic.transparent = S.ghost > 0.01; M.plastic.opacity = solid; M.plastic.depthWrite = S.ghost < 0.5;
-    M.coverPlastic.opacity = fade * solid; M.rubber.opacity = fade * solid; M.screw.opacity = fade;
+    parts.cover.visible = fade > 0.01;
+    const bk = sstep(S.board, 0.3, 1), caseFade = 1 - sstep(S.board, 0.55, 0.95);
+    parts.screws.position.y = sstep(S.screws, 0, 0.3) * 22;
+    M.screw.opacity = 1 - sstep(S.board, 0.15, 0.4); parts.screws.visible = M.screw.opacity > 0.01;
+    board.rotation.z = Math.PI * (1 - bk);
+    board.position.y = BOARD_Y * (1 - bk) + Math.sin(Math.PI * bk) * 60;
+    parts.shell.visible = parts.badge.visible = parts.power.visible = caseFade > 0.01;
+    parts.heatsink.position.set(-140 * sstep(S.sink, 0.25, 1), 42 * sstep(S.sink, 0, 0.5) - 57.2 * sstep(S.sink, 0.5, 1), 0);
+    const solid = (1 - 0.88 * S.ghost) * caseFade;
+    M.plastic.transparent = solid < 0.99; M.plastic.opacity = solid; M.plastic.depthWrite = solid > 0.5;
+    M.sticker.opacity = M.badge.opacity = M.print.opacity = caseFade;
+    M.coverPlastic.opacity = fade * solid; M.rubber.opacity = fade * solid;
     M.coverPlastic.depthWrite = M.coverPlastic.opacity > 0.5;
 
     // silicon

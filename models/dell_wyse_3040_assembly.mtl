@@ -50,7 +50,7 @@ Pr 0.25
 Pm 0.95
 
 newmtl pcb_soldermask
-Kd 0.0130 0.1441 0.0452
+Kd 0.0091 0.1022 0.0296
 Ks 0.2 0.2 0.2
 Ns 220
 Pr 0.45
@@ -147,6 +147,13 @@ Ks 0.9 0.9 0.9
 Ns 300
 Pr 0.25
 Pm 1
+
+newmtl electrolytic_cap
+Kd 0.0685 0.0423 0.2384
+Ks 0.2 0.2 0.2
+Ns 240
+Pr 0.4
+Pm 0.3
 
 newmtl smd_passive
 Kd 0.2542 0.1590 0.0742

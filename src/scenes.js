@@ -11,7 +11,7 @@ export const BASE = {
   flip: 0,     // 0 = standing on its feet (badge up), 1 = service side up
   hover: 0,    // extra lift off the floor
   rotY: -20,   // unit yaw
-  screws: 0, cover: 0, sink: 0,   // explode: screws out, cover off, heatsink off
+  cover: 0, screws: 0, board: 0, sink: 0,   // teardown: base off, board screws out, board out + flipped, heatsink off
   ghost: 0,    // x-ray chassis
   card: 0, router: 0, pulse: 0,   // props
   die: 0, cores: 0, media: 0,     // silicon floorplan glow / CPU load / media engine
@@ -27,10 +27,10 @@ export const SHOTS = {
   o3: { flip: 0, ghost: 0, hover: 0, rotY: 0, az: -28, el: 14, d: 340, video: 1, stutter: 1, cores: 1, tr: 2.2 },
   o4: { video: 0, stutter: 0, cores: 0, az: 25, d: 300, callout: ['$400+', 'list price, new, in enterprise catalogs'] },
   o5: { d: 200, az: 42, el: 10, tr: 'full' },
-  o6: { flip: 1, screws: 1, cover: 1, sink: 1, hover: 30, el: 46, az: 22, d: 230, die: 1, cores: 0.7, tr: 3.5 },
+  o6: { flip: 1, screws: 1, board: 1, cover: 1, sink: 1, hover: 30, el: 46, az: 22, d: 230, die: 1, cores: 0.7, tr: 3.5 },
 
   // ---- Chapter 1 — The palm-sized box ------------------------------------------------
-  a1: { flip: 0, screws: 0, cover: 0, sink: 0, die: 0, cores: 0, hover: 0, card: 1, az: 30, el: 24, d: 410, tr: 3, spin: 360, callout: ['101.6 × 101.6 × 27.94 mm', '240 g — lighter than a smartphone'] },
+  a1: { flip: 0, screws: 0, board: 0, cover: 0, sink: 0, die: 0, cores: 0, hover: 0, card: 1, az: 30, el: 24, d: 410, tr: 3, spin: 360, callout: ['101.6 × 101.6 × 27.94 mm', '240 g — lighter than a smartphone'] },
   a2: { az: -25, el: 16, d: 300, card: 0, callout: ['Dell Wyse 3040', 'a thin client — never built to be a desktop'] },
   a3: { az: 0, el: 4, fov: 14, d: 440, tr: 2, labels: [['usb3', 'USB 3.0'], ['usb2_front', 'USB 2.0', 1], ['audio', 'Headset']] },
   a4: { az: 180, tr: 2.4, labels: [['dp1', 'DisplayPort'], ['dp2', 'DisplayPort', 1], ['usb2_rear', '2× USB 2.0', 1], ['rj45', 'Gigabit Ethernet'], ['dc', 'DC in', 1]] },
@@ -39,17 +39,17 @@ export const SHOTS = {
   a7: { flip: 1, el: 48, az: 20, d: 300, tr: 2.6 },
 
   // ---- Chapter 2 — Inside the shell ---------------------------------------------------
-  b1: { screws: 1, cover: 1, az: 30, el: 36, d: 290, tr: 4 },
+  b1: { cover: 1, az: 30, el: 40, d: 290, tr: 3.5 },
   b2: { d: 200, el: 30, az: 40, hl: ['heatsink'], labels: [['heatsink', 'Passive aluminium heatsink']] },
   b3: { sink: 1, el: 44, d: 210, tr: 2.4 },
-  b4: { tx: 19, tz: -2, d: 95, el: 50, az: 25, hl: ['ram'], labels: [['ram', '2 GB DDR3L-1600 · soldered']] },
-  b5: { tx: -32, tz: 22, az: -20, hl: ['emmc'], labels: [['emmc', '16 GB eMMC flash']] },
+  b4: { tx: 6, tz: 22, d: 110, el: 52, az: 20, hl: ['ram'], labels: [['ram', '2 GB DDR3L-1600 · two soldered chips']] },
+  b5: { tx: -24, tz: 4, d: 95, el: 50, az: -20, hl: ['emmc'], labels: [['emmc', '16 GB eMMC flash']] },
   b6: { d: 120, hl: ['emmc'], callout: ['16 GB → 14.7 GB', 'decimal gigabytes vs. binary gibibytes'] },
-  b7: { tx: 34, tz: 27, az: 35, el: 48, d: 130, hl: ['m2'] },
-  b8: { d: 85, el: 58, tz: 20, hl: ['m2'], labels: [['m2', 'M.2 2230 · E-key · Wi-Fi / Bluetooth only']] },
+  b7: { tx: 34, tz: 10, az: 35, el: 48, d: 135, hl: ['m2'] },
+  b8: { d: 95, el: 58, hl: ['m2'], labels: [['m2', 'M.2 2230 · E-key · Wi-Fi / Bluetooth only']] },
   b9: { tx: 0, tz: 0, d: 290, el: 40, az: 20, callout: ['Thin client', 'one job: be a window onto a server'] },
   b10: { az: 150, el: 34, d: 280, packets: 1, codec: 1, hl: ['rj45'], labels: [['rj45', 'keyboard + mouse out · desktop video in']] },
-  b11: { packets: 0, az: 25, el: 46, d: 240, hl: ['soc', 'ram', 'emmc'], labels: [['soc', 'CPU'], ['ram', 'RAM'], ['emmc', 'Storage']] },
+  b11: { packets: 0, az: 25, el: 46, d: 240, hl: ['soc', 'ram', 'emmc'], labels: [['soc', 'CPU'], ['ram', 'RAM · other side', 1], ['emmc', 'Storage']] },
 
   // ---- Chapter 3 — Inside the two-watt silicon ------------------------------------------
   c1: { tx: 0, ty: 15, tz: -2, d: 75, el: 52, az: 20, tr: 3, labels: [['soc', 'Intel Atom x5-Z8350 · 14 nm']] },
@@ -63,23 +63,23 @@ export const SHOTS = {
   // ---- Chapter 4 — The YouTube codec trap ------------------------------------------------
   d1: { video: 1, stutter: 1, cores: 0.85, d: 150, el: 45, az: -25, tr: 3, callout: ['480p', '…and it still drops frames'] },
   d2: { d: 42, el: 58, az: -8, cores: 1, labels: [['cores', 'CPU cores · 100 %']] },
-  d3: { tx: 4, tz: -18, d: 170, el: 50, az: -35, packets: 1, codec: 0, tr: 2.2, labels: [['rj45', 'VP9 / AV1 stream in']] },
+  d3: { tx: -12, tz: -16, d: 170, el: 50, az: -35, packets: 1, codec: 0, tr: 2.2, labels: [['rj45', 'VP9 / AV1 stream in']] },
   d4: { tx: 1.5, tz: -2.5, d: 26, el: 62, az: 8, tr: 2.4, hl: ['media'], labels: [['gpu', 'Intel HD Graphics 400'], ['media', 'H.264 hardware decoder', 1]] },
   d5: { hl: ['media'], labels: [['media', 'no AV1 · no full VP9', 1]] },
   d6: { d: 30, labels: [['media', 'media engine: idle', 1]] },
   d7: { tx: 0, d: 34, az: -8, cores: 1, hl: ['cores'], labels: [['cores', 'software decode · 100 % load']] },
-  d8: { tx: 4, tz: -16, d: 150, el: 48, az: -30, codec: 1, cores: 0.6, tr: 2.4, callout: ['h264ify', 'ask for H.264 + working GPU drivers'] },
+  d8: { tx: -12, tz: -16, d: 150, el: 48, az: -30, codec: 1, cores: 0.6, tr: 2.4, callout: ['h264ify', 'ask for H.264 + working GPU drivers'] },
   d9: { tx: 0.5, tz: -2.5, d: 34, el: 60, az: 6, media: 1, cores: 0.12, stutter: 0, tr: 2.4, hl: ['media'], labels: [['media', 'hardware decode · active', 1]], callout: ['1080p', 'smooth'] },
 
   // ---- Chapter 5 — Why 2 GB strangles modern apps -----------------------------------------
-  e1: { video: 0, packets: 0, die: 0, cores: 0, media: 0, mem: 1, tx: 0, ty: 34, tz: -12, d: 270, az: 18, el: 16, tr: 3, hl: ['ram'], callout: ['2 GB', 'of RAM — soldered, forever'] },
+  e1: { video: 0, packets: 0, die: 0, cores: 0, media: 0, mem: 1, tx: 0, ty: 34, tz: -12, d: 270, az: 18, el: 16, tr: 3, callout: ['2 GB', 'of RAM — soldered, forever'] },
   e2: { memOS: 1150, memApp: 1350, tr: 'full' },
   e3: { az: -12, hl: ['emmc'], labels: [['emmc', 'overflow → swap on slow eMMC']] },
   e4: { memOS: 180, memApp: 0, az: 10, tr: 2.6, callout: ['< 200 MB', 'bare-bones Linux, no desktop'] },
   e5: { az: 25, d: 300, tr: 'full' },
 
   // ---- Chapter 6 — What this box actually beats ----------------------------------------------
-  f1: { mem: 0, memOS: 0, sink: 0, cover: 0, screws: 0, ty: 14, tz: 0, d: 300, el: 34, az: 30, tr: 3.2 },
+  f1: { mem: 0, memOS: 0, sink: 0, board: 0, cover: 0, screws: 0, ty: 14, tz: 0, d: 300, el: 34, az: 30, tr: 3.2 },
   f2: { flip: 0, el: 20, az: -20, tr: 2.4, callout: ['Daily desktop?', 'completely outgunned'] },
   f3: { router: 1, pulse: 1, tx: -75, ty: 10, tz: -45, d: 520, az: 150, el: 24, tr: 3 },
   f4: { az: 138, d: 480, callout: ['< 5 W · silent · x86-64', 'Pi-hole · Home Assistant · Proxmox node — 24 / 7'] },
@@ -88,7 +88,7 @@ export const SHOTS = {
   a2a: { az: -40, d: 320, callout: ['2016', 'built for corporate desks, not living rooms'] },
   a4a: { hl: ['dp1', 'dp2'], labels: [['dp1', '2560 × 1600'], ['dp2', '2560 × 1600', 1]] },
   a6a: { az: 55, callout: ['≈ 35 kWh / year', 'running 24 / 7'] },
-  b4a: { tx: 10, d: 120, hl: ['ram', 'soc'], labels: [['soc', 'integrated GPU'], ['ram', 'shared memory', 1]] },
+  b4a: { d: 135, az: 5, hl: ['ram'], labels: [['ram', 'shared with the integrated GPU']] },
   b5a: { d: 105, hl: ['emmc'], callout: ['eMMC', 'controller + flash in one soldered chip'] },
   b6a: { hl: ['emmc'], callout: ['32 GB · 64 GB', 'what Windows 10 and Windows 11 ask for'] },
   b8a: { tx: 0, tz: 20, d: 230, el: 40, az: 10, hl: ['usb3'], labels: [['usb3', 'the only way to add storage']] },
@@ -110,4 +110,5 @@ export const SHOTS = {
   f4a: { az: 120, d: 440, callout: ['Standard x86-64', 'boots ordinary Linux from USB'] },
   f4b: { tx: -20, ty: 14, tz: 0, d: 300, az: 20, el: 18, callout: ['Fireport', 'default BIOS password on used units'] },
   f4c: { az: 62, d: 380 },
+  b1a: { screws: 1, board: 1, tx: 0, tz: 0, d: 300, el: 38, az: 25, tr: 'full' },
 };

@@ -84,39 +84,15 @@
   "lines": [
    {
     "id": "b1",
-    "text": "Two screws come out, the plastic shell lifts away, and you are looking at the entire computer. One square circuit board."
-   },
-   {
-    "id": "b2",
-    "text": "Covering the middle is a flat black aluminum block. No heat pipes, no copper fins, no fan—just a slab of metal soaking heat into still air."
-   },
-   {
-    "id": "b3",
-    "text": "Lift the heatsink off, and the compromises show up immediately."
+    "text": "Flip it over. The base unclips with a flat screwdriver, and you are looking at the entire computer. One square circuit board."
    },
    {
     "id": "b4",
-    "text": "There are no memory slots. Those two gigabytes of DDR3L memory are soldered directly onto the board—locked forever at sixteen hundred megahertz on a single channel."
+    "text": "The first thing to notice: there are no memory slots. These two chips are the RAM—two gigabytes of DDR3L, soldered directly onto the board and locked forever at sixteen hundred megahertz on a single channel."
    },
    {
     "id": "b4a",
     "text": "And because there is no graphics card, the integrated GPU has no memory of its own. It borrows from those same two gigabytes."
-   },
-   {
-    "id": "b5",
-    "text": "Right beside it sits a single flat black chip: sixteen gigabytes of eMMC flash storage. Not a fast NVMe drive—essentially the same kind of storage soldered inside a budget tablet."
-   },
-   {
-    "id": "b5a",
-    "text": "eMMC is a single chip with its controller built in—cheap, compact, and several times slower than a modern SSD."
-   },
-   {
-    "id": "b6",
-    "text": "Plug it into Windows and it reports **14.7 gigabytes**—not because storage is missing, but because manufacturers count in powers of ten while operating systems count in powers of two."
-   },
-   {
-    "id": "b6a",
-    "text": "Either way, Windows 10 officially asks for thirty-two gigabytes of storage. Windows 11 wants sixty-four, plus four gigabytes of RAM. This box has neither."
    },
    {
     "id": "b7",
@@ -129,6 +105,34 @@
    {
     "id": "b8a",
     "text": "There is no SATA port and no drive bay either. If you want more storage, it has to hang off a USB port."
+   },
+   {
+    "id": "b1a",
+    "text": "The processor is not even on this side. Two screws release the board, and flipping it over reveals what was pressed up against the lid."
+   },
+   {
+    "id": "b2",
+    "text": "Covering the middle is a flat black aluminum block. No heat pipes, no copper fins, no fan—just a slab of metal soaking heat into still air."
+   },
+   {
+    "id": "b3",
+    "text": "Lift the heatsink off, and the compromises show up immediately."
+   },
+   {
+    "id": "b5",
+    "text": "Right beside the processor sits a single flat black chip: sixteen gigabytes of eMMC flash storage. Not a fast NVMe drive—essentially the same kind of storage soldered inside a budget tablet."
+   },
+   {
+    "id": "b5a",
+    "text": "eMMC is a single chip with its controller built in—cheap, compact, and several times slower than a modern SSD."
+   },
+   {
+    "id": "b6",
+    "text": "Plug it into Windows and it reports **14.7 gigabytes**—not because storage is missing, but because manufacturers count in powers of ten while operating systems count in powers of two."
+   },
+   {
+    "id": "b6a",
+    "text": "Either way, Windows 10 officially asks for thirty-two gigabytes of storage. Windows 11 wants sixty-four, plus four gigabytes of RAM. This box has neither."
    },
    {
     "id": "b9",

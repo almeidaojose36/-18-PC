@@ -64,6 +64,8 @@ DisplayPorts, stacked USB 2.0, Ethernet). Overall size, PCB, SoC package and die
 eMMC and M.2 2230 footprint use the blueprint dimensions. The lattice pitch, exact port
 positions, small board components and the silicon floorplan are estimated, not measured.
 
-Two deliberate departures from the real board, to match the script: the RAM sits next
-to the SoC on the heatsink side (on the real board the memory chips and the M.2 slot are
-on the opposite face), and the cover that lifts off is the flat base.
+The board follows teardown photos of both faces. The heatsink, SoC and eMMC are on the
+face that points at the lid; the two RAM chips, the M.2 E-key slot and the clock battery
+are on the underside you see when the base unclips. The teardown in Chapter 2 runs in
+that order: base off, underside tour, two screws out, board lifted and flipped, heatsink
+off. Component positions are read off the photos, so expect a millimetre or two of error.
