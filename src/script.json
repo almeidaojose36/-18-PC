@@ -44,6 +44,10 @@
     "text": "That is the Dell Wyse 3040—a machine never built to be a desktop PC at all."
    },
    {
+    "id": "a2a",
+    "text": "Dell announced it in 2016 for corporate desks, hospital carts, and call centers—places where thousands of identical boxes get bolted behind monitors."
+   },
+   {
     "id": "a3",
     "text": "On the front sit two USB ports—one blue USB 3.0, one USB 2.0—and a single headphone jack."
    },
@@ -52,12 +56,20 @@
     "text": "Spin it around to the back, and you find two full-size DisplayPorts, two more USB 2.0 ports, a gigabit Ethernet jack, and a tiny barrel power plug."
    },
    {
+    "id": "a4a",
+    "text": "Those DisplayPorts can drive two monitors at once, at up to twenty-five sixty by sixteen hundred each."
+   },
+   {
     "id": "a5",
     "text": "Notice what is missing. No vents. No fan grille. No spinning blades."
    },
    {
     "id": "a6",
     "text": "That is your first clue. A normal desktop pulls sixty to two hundred watts and needs fans to survive. This entire computer runs on less power than a nightlight."
+   },
+   {
+    "id": "a6a",
+    "text": "Leave it running all year, and it uses roughly thirty-five kilowatt-hours—a few dollars of electricity."
    },
    {
     "id": "a7",
@@ -87,12 +99,24 @@
     "text": "There are no memory slots. Those two gigabytes of DDR3L memory are soldered directly onto the board—locked forever at sixteen hundred megahertz on a single channel."
    },
    {
+    "id": "b4a",
+    "text": "And because there is no graphics card, the integrated GPU has no memory of its own. It borrows from those same two gigabytes."
+   },
+   {
     "id": "b5",
     "text": "Right beside it sits a single flat black chip: sixteen gigabytes of eMMC flash storage. Not a fast NVMe drive—essentially the same kind of storage soldered inside a budget tablet."
    },
    {
+    "id": "b5a",
+    "text": "eMMC is a single chip with its controller built in—cheap, compact, and several times slower than a modern SSD."
+   },
+   {
     "id": "b6",
     "text": "Plug it into Windows and it reports **14.7 gigabytes**—not because storage is missing, but because manufacturers count in powers of ten while operating systems count in powers of two."
+   },
+   {
+    "id": "b6a",
+    "text": "Either way, Windows 10 officially asks for thirty-two gigabytes of storage. Windows 11 wants sixty-four, plus four gigabytes of RAM. This box has neither."
    },
    {
     "id": "b7",
@@ -103,12 +127,20 @@
     "text": "At first glance, it looks like a place for an SSD. Look closer at the notch—that is an **E-key** slot, wired for a tiny Wi-Fi and Bluetooth card, not a standard M-key drive."
    },
    {
+    "id": "b8a",
+    "text": "There is no SATA port and no drive bay either. If you want more storage, it has to hang off a USB port."
+   },
+   {
     "id": "b9",
     "text": "Everything here was stripped down for one job: **being a thin client**."
    },
    {
     "id": "b10",
     "text": "In an office, this box is not supposed to run Excel or YouTube locally. It is meant to boot a tiny firmware, send your keyboard and mouse over Ethernet to a data-center server, and stream back a video of your desktop."
+   },
+   {
+    "id": "b10a",
+    "text": "The heavy lifting happens on a server down the hall, over protocols like RDP, Citrix, or VMware Horizon. The box on your desk is just a window."
    },
    {
     "id": "b11",
@@ -126,12 +158,24 @@
     "text": "At the center of the board sits the brain: an **Intel Atom x5-Z8350**, built on fourteen-nanometer silicon."
    },
    {
+    "id": "c1a",
+    "text": "It belongs to a family Intel code-named **Cherry Trail**, released in 2016 for low-cost tablets and two-in-one laptops."
+   },
+   {
     "id": "c2",
     "text": "Inside that tiny die are four CPU cores running at **1.44 gigahertz**, sharing just two megabytes of L2 cache."
    },
    {
+    "id": "c2a",
+    "text": "For short bursts they can climb to 1.92 gigahertz—and there is no hyper-threading, so four cores means exactly four threads."
+   },
+   {
     "id": "c3",
     "text": "Compare that to a modern laptop chip pushing five gigahertz with ten times the cache."
+   },
+   {
+    "id": "c3a",
+    "text": "A modern core also does far more work per clock tick, so the real gap is much wider than the gigahertz suggest."
    },
    {
     "id": "c4",
@@ -144,6 +188,10 @@
    {
     "id": "c6",
     "text": "That efficiency is why it never needs a fan."
+   },
+   {
+    "id": "c6a",
+    "text": "No fan also means no dust, no bearings to wear out, and no noise—exactly what an IT department wants across ten thousand desks."
    },
    {
     "id": "c7",
@@ -169,12 +217,28 @@
     "text": "In 2026, YouTube serves most streams using modern video codecs called **VP9** and **AV1**—formats invented years after this chip left the factory."
    },
    {
+    "id": "d3a",
+    "text": "H.264 dates back to 2003. AV1 arrived in 2018. Each generation squeezes the same picture into fewer bits."
+   },
+   {
+    "id": "d3b",
+    "text": "For YouTube, that is a huge win: AV1 needs roughly half the data of H.264 for the same quality. Smaller files, lower bandwidth bills."
+   },
+   {
+    "id": "d3c",
+    "text": "But there is a catch. The better the compression, the more math it takes to undo it."
+   },
+   {
     "id": "d4",
     "text": "Look inside the Atom's **Intel HD Graphics 400** block. It has dedicated hardware circuits built specifically to decode **H.264** video—ten times faster and with almost zero effort."
    },
    {
     "id": "d5",
     "text": "But it has **zero hardware circuits** for AV1 or full VP9."
+   },
+   {
+    "id": "d5a",
+    "text": "A hardware decoder is not software. It is a fixed circuit, etched into the silicon at the factory, and it can never learn a new format."
    },
    {
     "id": "d6",
@@ -185,12 +249,24 @@
     "text": "All the work falls onto the four tiny 1.44-gigahertz CPU cores—forcing them to unpack every single pixel in software, frame by frame, hitting one hundred percent load."
    },
    {
+    "id": "d7a",
+    "text": "The cores cannot finish one frame before the next is due. So the browser throws frames away—and that is the stutter you see."
+   },
+   {
     "id": "d8",
     "text": "Force the browser to request **H.264** instead—using a simple extension like *h264ify* and proper GPU drivers—and watch what flips inside the silicon."
    },
    {
+    "id": "d8a",
+    "text": "The trade-off is that H.264 on YouTube tops out at 1080p. On this machine, that is not a limit you will ever notice."
+   },
+   {
     "id": "d9",
     "text": "The hardware decoder wakes up, CPU usage collapses, and the exact same eighteen-dollar PC suddenly plays 1080p video smoothly."
+   },
+   {
+    "id": "d9a",
+    "text": "Nothing about the hardware changed. The only difference is which part of the chip was asked to do the work."
    }
   ]
  },
@@ -204,6 +280,10 @@
     "text": "Even with video fixed, one wall remains: **two gigabytes of RAM**."
    },
    {
+    "id": "e1a",
+    "text": "Windows 10 lists two gigabytes as its bare minimum. On this box, the system alone takes more than half of it before you open anything."
+   },
+   {
     "id": "e2",
     "text": "Open a single modern browser tab in 2026, and JavaScript, images, and background scripts easily swallow one to one-and-a-half gigabytes on their own."
    },
@@ -214,6 +294,10 @@
    {
     "id": "e4",
     "text": "Strip away heavy desktop environments and run a bare-bones Linux or text-only server OS, and memory usage drops below two hundred megabytes."
+   },
+   {
+    "id": "e4a",
+    "text": "Add a Linux feature called **zram**, and the system compresses idle data inside RAM instead of writing it to flash."
    },
    {
     "id": "e5",
@@ -239,8 +323,24 @@
     "text": "But plug it into your router over Ethernet, leave the monitor unplugged, and it becomes something a Raspberry Pi often costs twice as much to match."
    },
    {
+    "id": "f3a",
+    "text": "A Raspberry Pi needs a case, a power supply, and a storage card before it can do anything. This arrives with all three built in."
+   },
+   {
     "id": "f4",
     "text": "At under five watts with zero fan noise and x86-64 compatibility, it quietly runs **Pi-hole** network ad-blocking, **Home Assistant** smart-home automation, or a lightweight **Proxmox** cluster node—twenty-four hours a day."
+   },
+   {
+    "id": "f4a",
+    "text": "Because it is a standard x86 PC, ordinary Linux distributions install straight from a USB stick—no special images required."
+   },
+   {
+    "id": "f4b",
+    "text": "One tip for buyers: used units are often BIOS-locked. Dell's default password on these is **Fireport**, with a capital F."
+   },
+   {
+    "id": "f4c",
+    "text": "Pay eighteen dollars once, a few dollars a year in power, and it will sit behind your router doing its job for years."
    },
    {
     "id": "f5",

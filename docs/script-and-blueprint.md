@@ -1,6 +1,6 @@
 # Why an $18 PC Can't Play a YouTube Video in 2026 — Full Narration Script & 3D Blueprint
 
-**Target Runtime:** ~12 minutes (Cold Open + 6 Chapters)  
+**Target Runtime:** ~11 minutes (Cold Open + 6 Chapters)  
 **Subject:** Dell Wyse 3040 Thin Client (`101.6 × 101.6 × 27.94 mm`, `0.24 kg`, Intel Atom x5-Z8350, 2 GB DDR3L, 16 GB eMMC)  
 **Companion 3D Mesh:** `dell_wyse_3040_assembly.obj` (millimeter-accurate multi-part 3D assembly for Three.js / Blender)
 
@@ -23,10 +23,13 @@
 
 **a1.** Look at the outside first. Four inches wide, four inches deep, just over an inch tall, and lighter than a smartphone at two hundred and forty grams.
 **a2.** That is the Dell Wyse 3040—a machine never built to be a desktop PC at all.
+**a2a.** Dell announced it in 2016 for corporate desks, hospital carts, and call centers—places where thousands of identical boxes get bolted behind monitors.
 **a3.** On the front sit two USB ports—one blue USB 3.0, one USB 2.0—and a single headphone jack.
 **a4.** Spin it around to the back, and you find two full-size DisplayPorts, two more USB 2.0 ports, a gigabit Ethernet jack, and a tiny barrel power plug.
+**a4a.** Those DisplayPorts can drive two monitors at once, at up to twenty-five sixty by sixteen hundred each.
 **a5.** Notice what is missing. No vents. No fan grille. No spinning blades.
 **a6.** That is your first clue. A normal desktop pulls sixty to two hundred watts and needs fans to survive. This entire computer runs on less power than a nightlight.
+**a6a.** Leave it running all year, and it uses roughly thirty-five kilowatt-hours—a few dollars of electricity.
 **a7.** To understand why it struggles in 2026, we have to pop the bottom cover.
 
 ---
@@ -39,12 +42,17 @@
 **b2.** Covering the middle is a flat black aluminum block. No heat pipes, no copper fins, no fan—just a slab of metal soaking heat into still air.
 **b3.** Lift the heatsink off, and the compromises show up immediately.
 **b4.** There are no memory slots. Those two gigabytes of DDR3L memory are soldered directly onto the board—locked forever at sixteen hundred megahertz on a single channel.
+**b4a.** And because there is no graphics card, the integrated GPU has no memory of its own. It borrows from those same two gigabytes.
 **b5.** Right beside it sits a single flat black chip: sixteen gigabytes of eMMC flash storage. Not a fast NVMe drive—essentially the same kind of storage soldered inside a budget tablet.
+**b5a.** eMMC is a single chip with its controller built in—cheap, compact, and several times slower than a modern SSD.
 **b6.** Plug it into Windows and it reports **14.7 gigabytes**—not because storage is missing, but because manufacturers count in powers of ten while operating systems count in powers of two.
+**b6a.** Either way, Windows 10 officially asks for thirty-two gigabytes of storage. Windows 11 wants sixty-four, plus four gigabytes of RAM. This box has neither.
 **b7.** And look at that small connector in the corner: an M.2 slot.
 **b8.** At first glance, it looks like a place for an SSD. Look closer at the notch—that is an **E-key** slot, wired for a tiny Wi-Fi and Bluetooth card, not a standard M-key drive.
+**b8a.** There is no SATA port and no drive bay either. If you want more storage, it has to hang off a USB port.
 **b9.** Everything here was stripped down for one job: **being a thin client**.
 **b10.** In an office, this box is not supposed to run Excel or YouTube locally. It is meant to boot a tiny firmware, send your keyboard and mouse over Ethernet to a data-center server, and stream back a video of your desktop.
+**b10a.** The heavy lifting happens on a server down the hall, over protocols like RDP, Citrix, or VMware Horizon. The box on your desk is just a window.
 **b11.** When you force it to think for itself in 2026, every bottleneck lights up at once.
 
 ---
@@ -54,11 +62,15 @@
 *3D Scene: Macro zoom into the central Intel Atom x5-Z8350 package. The silicon die is exposed with iridescent lithography layers, highlighting 4 CPU cores, 2 MB L2 cache, and the Intel HD Graphics 400 block.*
 
 **c1.** At the center of the board sits the brain: an **Intel Atom x5-Z8350**, built on fourteen-nanometer silicon.
+**c1a.** It belongs to a family Intel code-named **Cherry Trail**, released in 2016 for low-cost tablets and two-in-one laptops.
 **c2.** Inside that tiny die are four CPU cores running at **1.44 gigahertz**, sharing just two megabytes of L2 cache.
+**c2a.** For short bursts they can climb to 1.92 gigahertz—and there is no hyper-threading, so four cores means exactly four threads.
 **c3.** Compare that to a modern laptop chip pushing five gigahertz with ten times the cache.
+**c3a.** A modern core also does far more work per clock tick, so the real gap is much wider than the gigahertz suggest.
 **c4.** Intel designed this silicon for tablets and thin clients with a **two-watt** scenario design power budget.
 **c5.** At idle, the whole computer sips around four watts from the wall. Under full load, it barely crosses five watts, staying under eighty degrees Celsius without a single moving part.
 **c6.** That efficiency is why it never needs a fan.
+**c6a.** No fan also means no dust, no bearings to wear out, and no noise—exactly what an IT department wants across ten thousand desks.
 **c7.** It is also why asking those four tiny cores to do modern heavy lifting leads straight to the YouTube mystery.
 
 ---
@@ -70,12 +82,19 @@
 **d1.** Open YouTube on this eighteen-dollar PC in 2026, and even a 480p video stutters and drops frames.
 **d2.** Most people blame the slow CPU and give up. They miss what is actually happening inside the chip.
 **d3.** In 2026, YouTube serves most streams using modern video codecs called **VP9** and **AV1**—formats invented years after this chip left the factory.
+**d3a.** H.264 dates back to 2003. AV1 arrived in 2018. Each generation squeezes the same picture into fewer bits.
+**d3b.** For YouTube, that is a huge win: AV1 needs roughly half the data of H.264 for the same quality. Smaller files, lower bandwidth bills.
+**d3c.** But there is a catch. The better the compression, the more math it takes to undo it.
 **d4.** Look inside the Atom's **Intel HD Graphics 400** block. It has dedicated hardware circuits built specifically to decode **H.264** video—ten times faster and with almost zero effort.
 **d5.** But it has **zero hardware circuits** for AV1 or full VP9.
+**d5a.** A hardware decoder is not software. It is a fixed circuit, etched into the silicon at the factory, and it can never learn a new format.
 **d6.** So when YouTube sends an AV1 stream, the dedicated video engine sits completely idle.
 **d7.** All the work falls onto the four tiny 1.44-gigahertz CPU cores—forcing them to unpack every single pixel in software, frame by frame, hitting one hundred percent load.
+**d7a.** The cores cannot finish one frame before the next is due. So the browser throws frames away—and that is the stutter you see.
 **d8.** Force the browser to request **H.264** instead—using a simple extension like *h264ify* and proper GPU drivers—and watch what flips inside the silicon.
+**d8a.** The trade-off is that H.264 on YouTube tops out at 1080p. On this machine, that is not a limit you will ever notice.
 **d9.** The hardware decoder wakes up, CPU usage collapses, and the exact same eighteen-dollar PC suddenly plays 1080p video smoothly.
+**d9a.** Nothing about the hardware changed. The only difference is which part of the chip was asked to do the work.
 
 ---
 
@@ -84,9 +103,11 @@
 *3D Scene: 3D memory bar/grid filling up in real time as Windows 10 vs. lightweight Linux vs. a single browser tab loads.*
 
 **e1.** Even with video fixed, one wall remains: **two gigabytes of RAM**.
+**e1a.** Windows 10 lists two gigabytes as its bare minimum. On this box, the system alone takes more than half of it before you open anything.
 **e2.** Open a single modern browser tab in 2026, and JavaScript, images, and background scripts easily swallow one to one-and-a-half gigabytes on their own.
 **e3.** The moment memory fills up, the system has to dump overflow onto that slow sixteen-gigabyte eMMC flash chip—and everything freezes.
 **e4.** Strip away heavy desktop environments and run a bare-bones Linux or text-only server OS, and memory usage drops below two hundred megabytes.
+**e4a.** Add a Linux feature called **zram**, and the system compresses idle data inside RAM instead of writing it to flash.
 **e5.** Suddenly, this tiny board has breathing room again.
 
 ---
@@ -98,7 +119,11 @@
 **f1.** So is an eighteen-dollar thin client a "bad" PC?
 **f2.** As a daily desktop—yes, it is completely outgunned.
 **f3.** But plug it into your router over Ethernet, leave the monitor unplugged, and it becomes something a Raspberry Pi often costs twice as much to match.
+**f3a.** A Raspberry Pi needs a case, a power supply, and a storage card before it can do anything. This arrives with all three built in.
 **f4.** At under five watts with zero fan noise and x86-64 compatibility, it quietly runs **Pi-hole** network ad-blocking, **Home Assistant** smart-home automation, or a lightweight **Proxmox** cluster node—twenty-four hours a day.
+**f4a.** Because it is a standard x86 PC, ordinary Linux distributions install straight from a USB stick—no special images required.
+**f4b.** One tip for buyers: used units are often BIOS-locked. Dell's default password on these is **Fireport**, with a capital F.
+**f4c.** Pay eighteen dollars once, a few dollars a year in power, and it will sit behind your router doing its job for years.
 **f5.** It was never broken. People were just asking a two-watt thin client to do a desktop's job.
 
 ---

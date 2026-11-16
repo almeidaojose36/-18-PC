@@ -18,7 +18,7 @@ const MODEL = process.env.ELEVENLABS_MODEL || 'eleven_multilingual_v2';
 const KEY = process.env.ELEVENLABS_API_KEY || 'proxy-injected';
 
 // Spoken-form fixes for things a TTS voice would stumble on.
-const SPOKEN = { d8: [['*h264ify*', 'H.264-ify']] };
+const SPOKEN = { d8: [['*h264ify*', 'H.264-ify']], e4a: [['zram', 'Z-RAM']], b10a: [['RDP', 'R.D.P.']] };
 const spoken = (l) => {
   let t = l.text;
   for (const [a, b] of SPOKEN[l.id] || []) t = t.replace(a, b);
