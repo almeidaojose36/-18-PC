@@ -1,7 +1,8 @@
 // Player: builds the timeline from the script + narration durations, drives the stage,
 // the HTML overlays (captions, callouts, labels, playback HUD, title cards) and audio.
 //
-// URL params:  ?t=123   start at a time (seconds)      ?clean=1  hide controls (for capture)
+// URL params:  ?t=123   start at a time (seconds)      ?clean=1  hide controls
+//              ?capture=1  frame-stepped mode used by scripts/render-video.mjs
 //              ?cc=0    hide captions                  ?mute=1   no narration audio
 import chapters from './script.json';
 import { BASE, SHOTS } from './scenes.js';
@@ -228,5 +229,15 @@ window.addEventListener('keydown', (e) => {
 });
 
 // Hooks for automated capture: window.player.seek(t) then .renderAt(t) draws that exact frame.
-window.player = { segs, duration: DURATION, seek, play: () => setPlaying(true), pause: () => setPlaying(false), renderAt: (t) => { time = t; render(t, 1); } };
-requestAnimationFrame(frame);
+// With ?capture=1 nothing runs on the wall clock: frame(t, dt) draws exactly that moment and
+// steps CSS transitions by dt, so every exported frame is deterministic.
+const capture = !!q.get('capture');
+function captureFrame(t, dt) {
+  time = t; render(t, dt);
+  for (const a of document.getAnimations()) {
+    a.pause(); a.currentTime = (Number(a.currentTime) || 0) + dt * 1000;
+    if (a.currentTime >= a.effect.getComputedTiming().endTime) a.finish();
+  }
+}
+window.player = { segs, duration: DURATION, seek, play: () => setPlaying(true), pause: () => setPlaying(false), frame: captureFrame };
+if (capture) document.body.classList.add('clean'); else requestAnimationFrame(frame);

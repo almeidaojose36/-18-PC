@@ -19,6 +19,19 @@ Press play (or Space). ← / → jump between script lines; the scrubber has a t
 URL options: `?clean=1` hides the controls (for screen capture), `?t=120` starts at a
 time in seconds, `?cc=0` hides captions, `?mute=1` disables narration.
 
+## Export an MP4
+
+With the dev server running:
+
+```bash
+npm run render -- --out out/video.mp4
+```
+
+Renders every frame in headless Chromium (1920×1080, 30 fps by default; `--fps`,
+`--width`, `--height`, `--workers` to change) and mixes in the narration. Needs
+`playwright` and `ffmpeg`. Finished 30-second chunks are kept in `out/.render`, so an
+interrupted render resumes when you run the command again.
+
 ## What is where
 
 | Path | What it is |
