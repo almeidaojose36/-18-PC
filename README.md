@@ -57,7 +57,13 @@ Narration uses the ElevenLabs API (`ELEVENLABS_API_KEY`, optional `ELEVENLABS_VO
 
 ## Model accuracy
 
-The outer chassis (`101.6 × 101.6 × 27.94 mm`), PCB, heatsink, SoC package and die,
-RAM, eMMC and M.2 2230 footprint use the dimensions from the blueprint. Port positions
-along the front and rear edges, the small board components and the silicon floorplan
-are plausible layouts, not measurements.
+The exterior follows photos of the real unit: the diamond lattice over the top and
+sides, the smooth front band with the power button on top, the round Dell logo and
+port order on the front (headset, USB 2.0, USB 3.0), and the rear layout (DC in, two
+DisplayPorts, stacked USB 2.0, Ethernet). Overall size, PCB, SoC package and die, RAM,
+eMMC and M.2 2230 footprint use the blueprint dimensions. The lattice pitch, exact port
+positions, small board components and the silicon floorplan are estimated, not measured.
+
+Two deliberate departures from the real board, to match the script: the RAM sits next
+to the SoC on the heatsink side (on the real board the memory chips and the M.2 slot are
+on the opposite face), and the cover that lifts off is the flat base.

@@ -14,9 +14,20 @@ function badgeTexture() {
   c.width = c.height = 256;
   const g = c.getContext('2d');
   g.strokeStyle = '#fff'; g.fillStyle = '#fff';
-  g.lineWidth = 14; g.beginPath(); g.arc(128, 128, 112, 0, Math.PI * 2); g.stroke();
-  g.font = '700 74px Helvetica, Arial, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
-  g.fillText('DELL', 128, 133);
+  g.lineWidth = 16; g.beginPath(); g.arc(128, 128, 112, 0, Math.PI * 2); g.stroke();
+  g.font = '700 78px Helvetica, Arial, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText('DELL', 128, 134);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  return t;
+}
+
+function nameTexture() {
+  const c = document.createElement('canvas');
+  c.width = 384; c.height = 64;
+  const g = c.getContext('2d');
+  g.fillStyle = '#fff'; g.font = '600 44px Helvetica, Arial, sans-serif'; g.textBaseline = 'middle';
+  g.fillText('Wyse 3040', 4, 34);
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
   return t;
@@ -63,7 +74,7 @@ export function createStage(canvas) {
   scene.add(floor);
 
   // ---- The unit ---------------------------------------------------------------------
-  const model = buildWyse3040({ badgeTexture: badgeTexture() });
+  const model = buildWyse3040({ badgeTexture: badgeTexture(), nameTexture: nameTexture() });
   const { unit, parts, bounds, materials: M } = model;
   unit.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   scene.add(unit);
@@ -111,8 +122,8 @@ export function createStage(canvas) {
 
   // ---- Stream packets (children of the unit so they follow it) --------------------------
   const v = (x, y, z) => new THREE.Vector3(x, y, z);
-  const pathCores = new THREE.CatmullRomCurve3([v(8.25, 6, -40), v(8.25, 13, -30), v(2, 13, -13), v(-2, 6, -4), v(-2.2, 1.7, -3.2)]);
-  const pathMedia = new THREE.CatmullRomCurve3([v(8.25, 6, -40), v(8.25, 13, -30), v(4.5, 13, -13), v(2, 6, -1.6), v(1.9, 1.7, -1.25)]);
+  const pathCores = new THREE.CatmullRomCurve3([v(30, 6, -38), v(28, 13, -28), v(8, 13, -12), v(-2, 6, -4), v(-2.2, 1.7, -3.2)]);
+  const pathMedia = new THREE.CatmullRomCurve3([v(30, 6, -38), v(28, 13, -28), v(10, 13, -11), v(2, 6, -1.6), v(1.9, 1.7, -1.25)]);
   const packetMat = new THREE.MeshBasicMaterial({ color: 0xff7a1a, toneMapped: false });
   const packets = [];
   for (let i = 0; i < 16; i++) {
@@ -163,7 +174,7 @@ export function createStage(canvas) {
   for (let i = 0; i < 5; i++) { const l = new THREE.Mesh(new THREE.BoxGeometry(4, 1.6, 0.6), ledMat); l.position.set(-40 + i * 12, 14, 47.8); router.add(l); }
   router.position.set(-175, 0, -30);
   scene.add(router);
-  const cablePath = new THREE.CatmullRomCurve3([v(-8.25, 8.6, -52), v(-9, 6, -84), v(-60, 2.4, -118), v(-140, 4, -112), v(-158, 12, -78)]);
+  const cablePath = new THREE.CatmullRomCurve3([v(-30, 8, -50), v(-31, 6, -84), v(-60, 2.4, -118), v(-140, 4, -112), v(-158, 12, -78)]);
   const cable = new THREE.Mesh(new THREE.TubeGeometry(cablePath, 80, 1.7, 10), new THREE.MeshStandardMaterial({ color: 0x2456c9, roughness: 0.5, transparent: true }));
   cable.castShadow = true;
   scene.add(cable);

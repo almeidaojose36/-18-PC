@@ -28,6 +28,20 @@ Ns 260
 Pr 0.35
 Pm 0.9
 
+newmtl sticker_blue
+Kd 0.0040 0.0782 0.2747
+Ks 0.2 0.2 0.2
+Ns 220
+Pr 0.45
+Pm 0
+
+newmtl printed_text
+Kd 0.6867 0.7011 0.7305
+Ks 0.2 0.2 0.2
+Ns 160
+Pr 0.6
+Pm 0
+
 newmtl dell_badge
 Kd 0.5841 0.6038 0.6445
 Ks 0.9 0.9 0.9
@@ -36,7 +50,7 @@ Pr 0.25
 Pm 0.95
 
 newmtl pcb_soldermask
-Kd 0.0048 0.0545 0.0296
+Kd 0.0130 0.1441 0.0452
 Ks 0.2 0.2 0.2
 Ns 220
 Pr 0.45

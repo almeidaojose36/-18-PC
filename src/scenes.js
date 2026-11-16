@@ -32,9 +32,9 @@ export const SHOTS = {
   // ---- Chapter 1 — The palm-sized box ------------------------------------------------
   a1: { flip: 0, screws: 0, cover: 0, sink: 0, die: 0, cores: 0, hover: 0, card: 1, az: 30, el: 24, d: 410, tr: 3, spin: 360, callout: ['101.6 × 101.6 × 27.94 mm', '240 g — lighter than a smartphone'] },
   a2: { az: -25, el: 16, d: 300, card: 0, callout: ['Dell Wyse 3040', 'a thin client — never built to be a desktop'] },
-  a3: { az: 0, el: 4, fov: 14, d: 440, tr: 2, labels: [['usb3', 'USB 3.0'], ['usb2_front', 'USB 2.0', 1], ['audio', 'Headset'], ['power', 'Power', 1]] },
+  a3: { az: 0, el: 4, fov: 14, d: 440, tr: 2, labels: [['usb3', 'USB 3.0'], ['usb2_front', 'USB 2.0', 1], ['audio', 'Headset']] },
   a4: { az: 180, tr: 2.4, labels: [['dp1', 'DisplayPort'], ['dp2', 'DisplayPort', 1], ['usb2_rear', '2× USB 2.0', 1], ['rj45', 'Gigabit Ethernet'], ['dc', 'DC in', 1]] },
-  a5: { az: 115, el: 28, fov: 30, d: 320, tr: 2.4, callout: ['No vents. No fan.', 'completely passive'] },
+  a5: { az: 115, el: 30, fov: 30, d: 320, tr: 2.4, callout: ['No vents. No fan.', 'completely passive'] },
   a6: { az: 40, el: 18, callout: ['< 5 W', 'a desktop PC pulls 60 – 200 W'] },
   a7: { flip: 1, el: 48, az: 20, d: 300, tr: 2.6 },
 
